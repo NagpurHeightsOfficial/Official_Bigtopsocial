@@ -24,7 +24,7 @@ const manifestos = [
     },
 ];
 
-const GridItem = ({ item, index }: { item: any; index: number }) => {
+const GridItem = ({ item, index }: { item: typeof manifestos[0]; index: number }) => {
     const ref = useRef(null);
     const isInView = useInView(ref, { once: true, margin: "-10%" });
 
@@ -107,7 +107,7 @@ export default function AboutSection() {
                         viewport={{ once: true }}
                         className="mt-8 text-xl md:text-2xl text-neutral-400 max-w-2xl font-light"
                     >
-                        Bigtop isn't an agency. It's a cult of creativity. We operate in the shadows of convention to shed light on what's possible.
+                        Bigtop isn&apos;t an agency. It&apos;s a cult of creativity. We operate in the shadows of convention to shed light on what&apos;s possible.
                     </motion.p>
                 </div>
 

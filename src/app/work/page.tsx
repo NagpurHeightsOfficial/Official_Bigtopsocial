@@ -242,7 +242,7 @@ const TitleCard = () => {
 
                     <div className="flex flex-col gap-6 max-w-sm">
                         <p className="text-lg text-neutral-400 font-light leading-relaxed">
-                            We don't just design. We engineer emotions, curate chaos, and build digital cathedrals for the bold.
+                            We don&apos;t just design. We engineer emotions, curate chaos, and build digital cathedrals for the bold.
                         </p>
 
                         <div className="flex items-center gap-3">
