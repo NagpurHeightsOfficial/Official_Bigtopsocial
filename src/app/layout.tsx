@@ -62,6 +62,11 @@ export const metadata: Metadata = {
     "creative solutions",
     "marketing agency"
   ],
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/favicon.ico',
+  },
   authors: [{ name: "BigTopSocial" }],
   creator: "BigTopSocial",
   publisher: "BigTopSocial",
