@@ -39,7 +39,11 @@ const ronzino = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "BigTopSocial | Social Media Agency",
+  metadataBase: new URL('https://bigtopsocial.com'),
+  title: {
+    default: "BigTopSocial | Social Media Agency",
+    template: "%s | BigTopSocial"
+  },
   description: "BigTopSocial is a leading creative and technology transformation company specializing in social media marketing, brand strategy, content creation, photography, videography, and digital solutions.",
   keywords: [
     "social media marketing",

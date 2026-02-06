@@ -2,6 +2,8 @@
 
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import { useRef } from "react";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 const manifestos = [
     {
@@ -69,56 +71,60 @@ export default function AboutSection() {
     const y = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
 
     return (
-        <section ref={containerRef} className="relative bg-neutral-950 py-32 overflow-hidden">
+        <>
+            <Navbar />
+            <section ref={containerRef} className="relative bg-neutral-950 py-32 overflow-hidden">
 
-            {/* Background Grid Lines (Subtle) */}
-            <div className="absolute inset-0 z-0 opacity-10 pointer-events-none">
-                <div className="absolute inset-y-0 left-1/4 w-px bg-white/5" />
-                <div className="absolute inset-y-0 right-1/4 w-px bg-white/5" />
-            </div>
-
-            {/* Massive Scrolling Typography (WorkSection Style) */}
-            <div className="w-full overflow-hidden mb-24 border-y border-white/7 py-8 relative z-0 flex justify-center items-center">
-                <motion.div className="whitespace-nowrap">
-                    <h2 className="text-[12vw] leading-[0.8] font-display font-medium text-transparent uppercase select-none opacity-60 text-center" style={{ WebkitTextStroke: "1px rgba(100, 100, 100, 0.5)" }}>
-                        CREATIVE CULT
-                    </h2>
-                </motion.div>
-            </div>
-
-            <div className="container mx-auto px-4 z-10 relative">
-
-                {/* Header Statement */}
-                <div className="mb-32 md:mb-48 pl-4 md:pl-12 border-l border-white/10">
-                    <motion.h2
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 1 }}
-                        viewport={{ once: true }}
-                        className="text-[12vw] md:text-[8vw] font-display font-medium leading-[0.8] tracking-tight text-white uppercase"
-                    >
-                        We Are <br />
-                        <span className="text-transparent stroke-text">The Vibe</span>
-                    </motion.h2>
-                    <motion.p
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        transition={{ duration: 1, delay: 0.5 }}
-                        viewport={{ once: true }}
-                        className="mt-8 text-xl md:text-2xl text-neutral-400 max-w-2xl font-light"
-                    >
-                        Bigtop isn&apos;t an agency. It&apos;s a cult of creativity. We operate in the shadows of convention to shed light on what&apos;s possible.
-                    </motion.p>
+                {/* Background Grid Lines (Subtle) */}
+                <div className="absolute inset-0 z-0 opacity-10 pointer-events-none">
+                    <div className="absolute inset-y-0 left-1/4 w-px bg-white/5" />
+                    <div className="absolute inset-y-0 right-1/4 w-px bg-white/5" />
                 </div>
 
-                {/* The Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border-b border-white/10">
-                    {manifestos.map((item, i) => (
-                        <GridItem key={i} item={item} index={i} />
-                    ))}
+                {/* Massive Scrolling Typography (WorkSection Style) */}
+                <div className="w-full overflow-hidden mb-24 border-y border-white/7 py-8 relative z-0 flex justify-center items-center">
+                    <motion.div className="whitespace-nowrap">
+                        <h2 className="text-[12vw] leading-[0.8] font-display font-medium text-transparent uppercase select-none opacity-60 text-center" style={{ WebkitTextStroke: "1px rgba(100, 100, 100, 0.5)" }}>
+                            CREATIVE CULT
+                        </h2>
+                    </motion.div>
                 </div>
 
-            </div>
-        </section>
+                <div className="container mx-auto px-4 z-10 relative">
+
+                    {/* Header Statement */}
+                    <div className="mb-32 md:mb-48 pl-4 md:pl-12 border-l border-white/10">
+                        <motion.h2
+                            initial={{ opacity: 0, x: -20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 1 }}
+                            viewport={{ once: true }}
+                            className="text-[12vw] md:text-[8vw] font-display font-medium leading-[0.8] tracking-tight text-white uppercase"
+                        >
+                            We Are <br />
+                            <span className="text-transparent stroke-text">The Vibe</span>
+                        </motion.h2>
+                        <motion.p
+                            initial={{ opacity: 0 }}
+                            whileInView={{ opacity: 1 }}
+                            transition={{ duration: 1, delay: 0.5 }}
+                            viewport={{ once: true }}
+                            className="mt-8 text-xl md:text-2xl text-neutral-400 max-w-2xl font-light"
+                        >
+                            Bigtop isn&apos;t an agency. It&apos;s a cult of creativity. We operate in the shadows of convention to shed light on what&apos;s possible.
+                        </motion.p>
+                    </div>
+
+                    {/* The Grid */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border-b border-white/10">
+                        {manifestos.map((item, i) => (
+                            <GridItem key={i} item={item} index={i} />
+                        ))}
+                    </div>
+
+                </div>
+            </section>
+            <Footer />
+        </>
     );
 }

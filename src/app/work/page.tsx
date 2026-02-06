@@ -4,6 +4,8 @@ import { motion, useTransform, useScroll, useSpring, MotionValue, AnimatePresenc
 import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 interface Project {
     id: number;
@@ -318,21 +320,25 @@ export default function WorkSection() {
     const x = useTransform(smoothProgress, [0, 1], ["0%", "-83.33%"]);
 
     return (
-        <section ref={targetRef} className="relative h-[600vh] bg-neutral-950">
-            <div className="sticky top-0 flex h-screen items-center overflow-hidden">
-                <motion.div style={{ x }} className="flex">
-                    <TitleCard />
-                    {projects.map((project, index) => (
-                        <ProjectCard
-                            key={project.id}
-                            project={project}
-                            index={index}
-                            progress={smoothProgress}
-                            total={totalItems - 1} // max index
-                        />
-                    ))}
-                </motion.div>
-            </div>
-        </section>
+        <>
+            <Navbar />
+            <section ref={targetRef} className="relative h-[600vh] bg-neutral-950">
+                <div className="sticky top-0 flex h-screen items-center overflow-hidden">
+                    <motion.div style={{ x }} className="flex">
+                        <TitleCard />
+                        {projects.map((project, index) => (
+                            <ProjectCard
+                                key={project.id}
+                                project={project}
+                                index={index}
+                                progress={smoothProgress}
+                                total={totalItems - 1} // max index
+                            />
+                        ))}
+                    </motion.div>
+                </div>
+            </section>
+            <Footer />
+        </>
     );
 }
