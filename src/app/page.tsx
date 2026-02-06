@@ -10,7 +10,7 @@ import ContactSection from "@/components/ContactSection";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Home | BigTopSocial - Creative & Digital Marketing Agency",
+  title: "BigTopSocial | Creative & Digital Marketing Agency",
   description: "Welcome to BigTopSocial - Your partner in creative excellence and digital transformation. We offer social media marketing, branding, content creation, and innovative digital solutions.",
   keywords: [
     "digital marketing",
