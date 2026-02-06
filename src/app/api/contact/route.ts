@@ -120,7 +120,7 @@ export async function POST(request: Request) {
           <p><strong>Message:</strong></p>
           <p>${message.replace(/\n/g, "<br>")}</p>
           <hr />
-          <p>Best regards,<br />Social Media Agency Team</p>
+          <p>Best regards,<br />BigTopSocial Team</p>
         `,
       });
     } catch (replyErr: unknown) {
