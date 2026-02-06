@@ -39,8 +39,66 @@ const ronzino = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "BigTopSocial | The Creative & Technology Transformation Company",
-  description: "BigTopSocial is a Creative & Technology Transformation Company.",
+  title: "BigTopSocial | Social Media Agency",
+  description: "BigTopSocial is a leading creative and technology transformation company specializing in social media marketing, brand strategy, content creation, photography, videography, and digital solutions.",
+  keywords: [
+    "social media marketing",
+    "digital marketing agency",
+    "brand strategy",
+    "content creation",
+    "photography services",
+    "videography",
+    "creative agency",
+    "technology transformation",
+    "SEO services",
+    "performance marketing",
+    "social media management",
+    "brand identity design",
+    "digital transformation",
+    "creative solutions",
+    "marketing agency"
+  ],
+  authors: [{ name: "BigTopSocial" }],
+  creator: "BigTopSocial",
+  publisher: "BigTopSocial",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://bigtopsocial.com",
+    title: "BigTopSocial | Creative & Technology Transformation Company",
+    description: "Transform your brand with cutting-edge creative and technology solutions. Expert social media marketing, content creation, and digital strategy.",
+    siteName: "BigTopSocial",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "BigTopSocial - Creative & Technology Transformation",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "BigTopSocial | Creative & Technology Transformation Company",
+    description: "Transform your brand with cutting-edge creative and technology solutions.",
+    images: ["/og-image.jpg"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
 };
 
 export default function RootLayout({
