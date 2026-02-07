@@ -257,7 +257,7 @@ export default function WorkPage() {
             <main className="bg-[#050505] text-white min-h-screen">
 
                 {/* Hero Section */}
-                <section className="h-[40vh] md:h-[70vh] flex flex-col justify-end pb-12 md:pb-24 px-6 relative">
+                <section className="min-h-[50vh] md:min-h-[70vh] flex flex-col justify-end pt-32 pb-12 md:pb-24 px-6 relative">
                     <div className="container mx-auto">
                         <Reveal delay={0.1}>
                             <h1 className="text-[12vw] md:text-[10vw] leading-[0.85] font-display font-medium uppercase tracking-tight">
