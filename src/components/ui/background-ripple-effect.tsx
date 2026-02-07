@@ -122,7 +122,7 @@ const DivGrid = ({
               borderColor: borderColor,
               ...style,
             }}
-            onMouseEnter={
+            onClick={
               interactive ? () => onCellHover?.(rowIdx, colIdx) : undefined
             }
           />

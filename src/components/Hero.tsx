@@ -22,32 +22,24 @@ export default function Hero() {
     offset: ["start start", "end end"],
   });
 
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 30,
-    damping: 20,
-    mass: 1.2,
-    restDelta: 0.001
-  });
+  // Optimize: Remove heavy spring physics for scroll-linked animations
+  // Direct mapping using scrollYProgress is faster and lag-free
 
   // Animation values
   // On mobile start video higher (30vh) to reduce gap, desktop (120vh - offscreen bottom)
   const initialY = isMobile ? "30vh" : "120vh";
-  const midY = isMobile ? "20vh" : "80vh"; // Heavy Lift-off point
 
-  // Revised Animation: "Fast Fit" Reveal
-  // 0 -> 0.25: Text stays visible, video waits offscreen/low
-  // 0.25 -> 0.6: Video rapidly rises and scales up to fill screen (The "Fast Fit")
-  const videoY = useTransform(smoothProgress, [0.2, 0.6], [initialY, "0vh"]);
-  const scale = useTransform(smoothProgress, [0.2, 0.6], [0.6, 1]);
-  // Keep border radius consistent/static on desktop for that "floating card" feel even when full width
-  const borderRadius = useTransform(smoothProgress, [0.2, 0.6], ["2.5rem", "2.5rem"]);
+  // Revised Animation: Faster, lighter reveal
+  const videoY = useTransform(scrollYProgress, [0.1, 0.5], [initialY, "0vh"]);
+  const scale = useTransform(scrollYProgress, [0.1, 0.5], [0.8, 1]); // Start slightly larger (0.8) to reduce scaling work
+  const borderRadius = useTransform(scrollYProgress, [0.1, 0.5], ["2.5rem", "0rem"]); // Animate radius to 0 for full immersion
 
-  // Text fades out as video approaches
-  const textOpacity = useTransform(smoothProgress, [0, 0.3], [1, 0]);
-  const textY = useTransform(smoothProgress, [0, 0.3], [0, -100]);
+  // Text fades out faster
+  const textOpacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
+  const textY = useTransform(scrollYProgress, [0, 0.2], [0, -50]);
 
   return (
-    <div ref={containerRef} className={`relative bg-neutral-950 ${isMobile ? "h-screen" : "h-[250vh]"}`}>
+    <div ref={containerRef} className={`relative bg-neutral-950 ${isMobile ? "h-screen" : "h-[180vh]"}`}>
 
       {/* Sticky Container */}
       <div className={`w-full overflow-hidden flex flex-col items-center justify-center ${isMobile ? "relative h-full" : "sticky top-0 h-screen"
@@ -99,7 +91,7 @@ export default function Hero() {
             ? "bottom-0 h-[40vh] rounded-t-[2.5rem] mb-20" // Mobile: Static at bottom with rounded top
             : "top-0 h-full flex items-center justify-center" // Desktop: Fullscreen centered
             }`}
-          style={isMobile ? {} : { y: videoY, scale, borderRadius }}
+          style={isMobile ? {} : { y: videoY, scale, borderRadius, willChange: "transform" }}
         >
           <div className="relative w-full h-full bg-black">
             <video

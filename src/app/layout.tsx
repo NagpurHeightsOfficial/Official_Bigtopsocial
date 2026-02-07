@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import ThreePreloader from "@/components/ThreePreloader";
+import SmoothScroll from "@/components/SmoothScroll";
+import Cursor from "@/components/Cursor";
+
+
 
 const ronzino = localFont({
   src: [
@@ -120,6 +125,9 @@ export default function RootLayout({
       <body
         className={`antialiased bg-[#1D1D1F] text-white font-sans`}
       >
+        <ThreePreloader />
+        <Cursor />
+        <SmoothScroll />
         {children}
       </body>
     </html>

@@ -1,12 +1,13 @@
 "use client";
 
-import { motion, useTransform, useScroll, useSpring, MotionValue, AnimatePresence } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
+import { motion, useScroll, useTransform, useSpring, MotionValue, useInView } from "framer-motion";
+import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
+// --- Project Data ---
 interface Project {
     id: number;
     title: string;
@@ -24,321 +25,290 @@ const projects: Project[] = [
         id: 1,
         title: "ELkem",
         category: "Branding",
-        description: "A new-generation design language shaping the future brand direction, brought to life through a festive corporate gifting brochure crafted for large-scale distribution.",
+        description: "A new-generation design language shaping the future brand direction. We crafted a corporate gifting experience that bridges industrial legacy with modern minimalism.",
         year: "2025",
-        role: "Print Media Service",
-        services: ["Brochure Design", "Flyer Design", "Menu Design", "Poster Design"],
+        role: "Visual Identity",
+        services: ["Brochure Design", "Art Direction", "Print Production"],
         location: "Norway",
-        images: [
-            "/workimages/1.1.webp",
-            "/workimages/1.2.webp",
-            "/workimages/1.3.webp",
-        ],
+        images: ["/workimages/1.1.webp"]
     },
     {
         id: 2,
-        title: "NeoBank App",
+        title: "NeoBank",
         category: "Product Design",
-        description: "Redefining digital banking with a focus on user-centric design patterns and seamless transactional flows for the next billion users.",
+        description: "Redefining digital banking for the next billion users. A frictionless mobile experience that turns complex financial data into intuitive, actionable insights.",
         year: "2024",
         role: "UI/UX Design",
-        services: ["App Interface", "User Research", "Prototyping", "Design System"],
+        services: ["App Interface", "Design System", "Prototyping"],
         location: "London",
-        images: [
-            "https://picsum.photos/seed/finance/1600/900",
-            "https://picsum.photos/seed/finance2/1600/900",
-            "https://picsum.photos/seed/finance3/1600/900",
-        ]
+        images: ["https://picsum.photos/seed/finance/1600/1200"]
     },
     {
         id: 3,
         title: "Future Tech",
         category: "Identity",
-        description: "Crafting a visual identity that bridges the gap between human intuition and artificial intelligence, creating a brand that feels both futuristic and familiar.",
+        description: "Visualizing the invisible. A brand identity system for an AI research lab, bridging the gap between human intuition and machine intelligence.",
         year: "2024",
         role: "Brand Identity",
-        services: ["Logo Design", "Brand Guidelines", "Visual Assets", "Motion Design"],
+        services: ["Logo Design", "Motion Graphics", "3D Rendering"],
         location: "San Francisco",
-        images: [
-            "https://picsum.photos/seed/tech/1600/900",
-            "https://picsum.photos/seed/tech2/1600/900",
-            "https://picsum.photos/seed/tech3/1600/900",
-        ]
+        images: ["https://picsum.photos/seed/tech/1600/1200"]
     },
     {
         id: 4,
-        title: "Global Logistics",
+        title: "Logos Chain",
         category: "Web Platform",
-        description: "Streamlining complex supply chain data into an intuitive dashboard interface, empowering operators with real-time visibility and control.",
+        description: "Streamlining global supply chain data into a single source of truth. A high-performance dashboard empowering operators with real-time visibility.",
         year: "2023",
         role: "Web Development",
-        services: ["Frontend Dev", "Dashboard UI", "Data Viz", "API Integration"],
+        services: ["Frontend Dev", "Data Visualization", "API Integration"],
         location: "Singapore",
-        images: [
-            "https://picsum.photos/seed/logistics/1600/900",
-            "https://picsum.photos/seed/logistics2/1600/900",
-            "https://picsum.photos/seed/logistics3/1600/900",
-        ]
+        images: ["https://picsum.photos/seed/logistics/1600/1200"]
     },
     {
         id: 5,
-        title: "Eco Campaign",
+        title: "Eco Energy",
         category: "Marketing",
-        description: "A global campaign designed to raise awareness about sustainable energy practices through impactful visual storytelling and digital engagement.",
+        description: "A global campaign raising awareness for sustainable energy. Impactful visual storytelling that drove 200% engagement across social channels.",
         year: "2023",
         role: "Campaign Strategy",
-        services: ["Social Media", "Content Creation", "Art Direction", "Copywriting"],
+        services: ["Social Media", "Video Production", "Copywriting"],
         location: "Berlin",
-        images: [
-            "https://picsum.photos/seed/energy/1600/900",
-            "https://picsum.photos/seed/energy2/1600/900",
-            "https://picsum.photos/seed/energy3/1600/900",
-        ]
+        images: ["https://picsum.photos/seed/energy/1600/1200"]
     },
 ];
 
-const ProjectCard = ({ project, index, progress, total }: { project: Project, index: number, progress: MotionValue<number>, total: number }) => {
-    const visualIndex = index + 1;
-    const step = 1 / total;
-    const center = visualIndex * step;
+// --- Utilities & Components ---
 
-    // Minimalist animations: Smooth Fade & Scale
-    // Image scales up slightly when in focus (0.9 -> 1.0)
-    const scale = useTransform(progress, [center - step, center, center + step], [0.9, 1, 0.9]);
-    // Content fades in/out cleanly
-    const opacity = useTransform(progress, [center - step * 0.6, center, center + step * 0.6], [0, 1, 0]);
-    // Subtle x-axis shift for parallax feeling without being overwhelming
-    const x = useTransform(progress, [center - step, center + step], ["5%", "-5%"]);
+const Reveal = ({ children, delay = 0, className = "" }: { children: React.ReactNode, delay?: number, className?: string }) => {
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-10%" }}
+            transition={{ duration: 0.8, delay, ease: [0.21, 0.47, 0.32, 0.98] }}
+            className={className}
+        >
+            {children}
+        </motion.div>
+    );
+};
 
-    // Slideshow State
-    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+const ProjectSection = ({ project, index }: { project: Project; index: number }) => {
+    const container = useRef(null);
+    const { scrollYProgress } = useScroll({
+        target: container,
+        offset: ["start end", "end start"]
+    });
 
-    useEffect(() => {
-        const timer = setInterval(() => {
-            setCurrentImageIndex((prev) => (prev + 1) % project.images.length);
-        }, 4000);
+    // Parallax Effects (Keep the structural parallax, but remove opacity control to let Reveal take over)
+    const yContent = useTransform(scrollYProgress, [0, 1], [50, -50]); // Adjusted to be subtle
+    const scaleImage = useTransform(scrollYProgress, [0, 0.5, 1], [1.15, 1, 1.15]);
 
-        return () => clearInterval(timer);
-    }, [project.images.length]);
+    // Smooth line reveal
+    const isLineInView = useInView(container, { once: true, margin: "-20%" });
+
+    // Alternating Layout
+    const isEven = index % 2 === 0;
 
     return (
-        <div className="h-screen w-screen flex-shrink-0 flex items-center justify-center relative overflow-hidden bg-neutral-950">
-            <motion.div
-                style={{ opacity }}
-                className="w-[90vw] max-w-[1600px] h-[85vh] md:h-[80vh] flex flex-col md:grid md:grid-cols-12 gap-0 md:gap-8 items-center relative"
-            >
+        <section ref={container} className="min-h-screen relative py-20 md:py-32 overflow-hidden">
 
-                {/* --- Image Column (Mobile: Top 35% / Desktop: Right 7 Cols) --- */}
-                <div className="order-1 md:order-2 relative w-full h-[35vh] md:h-full md:col-span-7 overflow-hidden bg-neutral-900 z-10">
-                    {/* Image Frame */}
-                    <motion.div
-                        style={{ scale, x }}
-                        className="relative w-full h-full md:h-[90%] md:ml-[-5%] overflow-hidden bg-neutral-900 md:mt-12"
-                    >
-                        <AnimatePresence mode="popLayout">
+            {/* Animated Separator Line */}
+            <motion.div
+                className="absolute top-0 left-0 h-px bg-white/10 z-20"
+                initial={{ width: "0%" }}
+                whileInView={{ width: "100%" }}
+                viewport={{ once: true }}
+                transition={{ duration: 1.5, ease: "easeInOut" }}
+            />
+
+            {/* Background Big Number */}
+            <div className={`absolute top-20 ${isEven ? 'right-0' : 'left-0'} opacity-[0.02] select-none pointer-events-none z-0`}>
+                <Reveal delay={0.2}>
+                    <span className="text-[30vw] font-display font-bold leading-none tracking-tighter">
+                        0{project.id}
+                    </span>
+                </Reveal>
+            </div>
+
+            <div className="container mx-auto px-6 relative z-10">
+                <div className={`flex flex-col md:flex-row gap-12 md:gap-24 items-center ${isEven ? '' : 'md:flex-row-reverse'}`}>
+
+                    {/* Project Image (Parallax Window) */}
+                    <div className="w-full md:w-3/5 h-[50vh] md:h-[70vh] relative overflow-hidden group rounded-sm">
+                        <motion.div
+                            style={{ scale: scaleImage }}
+                            className="w-full h-full relative"
+                        >
                             <motion.div
-                                key={currentImageIndex}
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                exit={{ opacity: 0 }}
+                                initial={{ opacity: 0, scale: 1.1 }}
+                                whileInView={{ opacity: 1, scale: 1 }}
+                                viewport={{ once: true }}
                                 transition={{ duration: 1.2 }}
-                                className="absolute inset-0 w-full h-full"
+                                className="w-full h-full relative"
                             >
-                                {/* No tints, no overlays, just the pure image */}
                                 <Image
-                                    src={project.images[currentImageIndex]}
+                                    src={project.images[0]}
                                     alt={project.title}
                                     fill
-                                    className="object-cover opacity-100 transition-opacity duration-500"
-                                    priority={index < 2}
+                                    className="object-cover transition-opacity duration-700 opacity-80 group-hover:opacity-100" // Slight dim by default, bright on hover
                                 />
                             </motion.div>
-                        </AnimatePresence>
+                        </motion.div>
 
-                        {/* Minimal Pagination Dots on Image */}
-                        <div className="absolute bottom-6 left-6 flex gap-2 z-20">
-                            {project.images.map((_, idx) => (
-                                <div
-                                    key={idx}
-                                    className={`transition-all duration-300 ${idx === currentImageIndex ? 'w-2 h-2 bg-white' : 'w-2 h-2 border border-white/50'}`}
-                                />
-                            ))}
-                        </div>
-                    </motion.div>
-                </div>
+                        {/* Overlay Decor */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 pointer-events-none" />
 
-                {/* --- Left Column: Typography & Grid (Mobile: Bottom 65% / Desktop: Left 5 Cols) --- */}
-                <div className="order-2 md:order-1 col-span-1 md:col-span-5 flex flex-col justify-between h-[55vh] md:h-full py-6 md:py-12 z-20 bg-neutral-950 md:bg-transparent pl-0 md:pl-0 w-full relative">
-
-                    {/* Massive Background Index Number for Mobile Depth */}
-                    <div className="absolute top-0 right-0 text-[10rem] font-display font-bold text-neutral-800/20 leading-none -mt-4 mr-4 md:hidden pointer-events-none select-none">
-                        0{index + 1}
-                    </div>
-
-                    {/* Header */}
-                    <div className="flex items-center gap-4 text-white/50 border-b border-white/10 pb-4 w-full md:w-2/3">
-                        <span className="font-mono text-sm">0{index + 1}</span>
-                        <span className="h-[1px] flex-1 bg-white/20" />
-                        <span className="font-mono text-sm">0{total}</span>
-                    </div>
-
-                    {/* Title */}
-                    <div className="py-4 md:py-12">
-                        <h2 className="text-5xl md:text-8xl lg:text-9xl font-display font-medium text-white tracking-tighter leading-[0.9] md:leading-[0.85] -ml-1">
-                            {project.title}
-                        </h2>
-                        <p className="mt-4 md:mt-8 text-sm md:text-lg text-neutral-400 max-w-sm leading-relaxed font-light line-clamp-3 md:line-clamp-none">
-                            {project.description}
-                        </p>
-                    </div>
-
-                    {/* Metadata Grid */}
-                    <div className="grid grid-cols-2 gap-y-4 md:gap-y-8 gap-x-4 border-t border-white/10 pt-4 md:pt-8 w-full md:w-3/4">
-                        <div>
-                            <h4 className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-neutral-500 mb-1 md:mb-2">Category</h4>
-                            <p className="text-sm md:text-base text-white font-medium">{project.category}</p>
-                        </div>
-                        <div>
-                            <h4 className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-neutral-500 mb-1 md:mb-2">Year</h4>
-                            <p className="text-sm md:text-base text-white font-medium">{project.year}</p>
-                        </div>
-                        <div>
-                            <h4 className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-neutral-500 mb-1 md:mb-2">Services</h4>
-                            <div className="flex flex-wrap gap-2 text-[10px] md:text-sm text-neutral-300">
-                                {project.services.slice(0, 2).join(", ")}
+                        {/* Hover Overlay Button */}
+                        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                            <div className="w-24 h-24 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center">
+                                <span className="text-white text-sm font-bold uppercase tracking-widest">View</span>
                             </div>
                         </div>
-                        <div>
-                            <Link href={`/work/${project.id}`} className="inline-flex items-center gap-2 text-white hover:text-neutral-300 transition-colors group">
-                                <span className="uppercase tracking-widest text-[10px] md:text-sm font-bold border-b border-white group-hover:border-neutral-300 pb-0.5">Explore</span>
-                                <span className="transform -rotate-45 group-hover:rotate-0 transition-transform duration-300">→</span>
-                            </Link>
-                        </div>
                     </div>
 
-                </div>
+                    {/* Project Details */}
+                    <div className="w-full md:w-2/5">
+                        <motion.div style={{ y: yContent }} className="relative">
 
-            </motion.div>
-        </div>
-    )
-}
-
-const TitleCard = () => {
-    // Triple the projects list to ensure smooth infinite scrolling
-    const broadcastProjects = [...projects, ...projects, ...projects];
-
-    return (
-        <div className="h-screen w-screen flex-shrink-0 p-2 md:p-4 flex items-center justify-center">
-            <div className="w-[90vw] h-[100vh] relative bg-neutral-950 rounded-[3rem] overflow-hidden flex flex-col md:flex-row shadow-2xl border border-neutral-900">
-
-                {/* Left Column: Typography & Manifesto */}
-                <div className="flex-1 flex flex-col justify-center px-8 md:px-16 lg:px-24 z-20 relative bg-neutral-950 md:bg-transparent">
-
-                    <div className="mb-8">
-                        <h2 className="text-7xl md:text-9xl font-display font-medium text-white tracking-tighter leading-[0.9]">
-                            Visuals <br />
-                            <span className="italic text-neutral-500 font-light">That</span> <br />
-                            Speak.
-                        </h2>
-                    </div>
-
-                    <div className="flex flex-col gap-6 max-w-sm">
-                        <p className="text-lg text-neutral-400 font-light leading-relaxed">
-                            We don&apos;t just design. We engineer emotions, curate chaos, and build digital cathedrals for the bold.
-                        </p>
-
-                        <div className="flex items-center gap-3">
-                            <div className="h-[1px] w-12 bg-white/30" />
-                            <span className="text-xs font-bold uppercase tracking-widest text-white/50">Since 2024</span>
-                        </div>
-                    </div>
-
-                    {/* Bottom Scroll Indicator */}
-                    <div className="absolute bottom-12 left-8 md:left-16 lg:left-24 flex items-center gap-4 animate-pulse">
-                        <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center">
-                            <span className="text-white text-xl">↓</span>
-                        </div>
-                        <span className="text-xs font-bold uppercase tracking-widest text-white/30">Scroll to Explore</span>
-                    </div>
-                </div>
-
-                {/* Right Column: Kinetic Gallery (Marquee) */}
-                <div className="hidden md:flex flex-1 relative h-full overflow-hidden mask-gradient-b">
-                    {/* Overlay Gradient for smooth fade top/bottom */}
-                    <div className="absolute inset-0 z-10 bg-gradient-to-b from-neutral-950 via-transparent to-neutral-950 pointer-events-none" />
-
-                    {/* Column 1: Speed Up */}
-                    <div className="w-1/2 h-full relative overflow-hidden">
-                        <motion.div
-                            animate={{ y: ["0%", "-50%"] }}
-                            transition={{ ease: "linear", duration: 25, repeat: Infinity }}
-                            className="w-full flex flex-col gap-4 py-4"
-                        >
-                            {broadcastProjects.map((p, i) => (
-                                <div key={`${p.id}-col1-${i}`} className="relative w-full aspect-[3/4] rounded-2xl overflow-hidden filter grayscale hover:grayscale-0 transition-all duration-500 opacity-60 hover:opacity-100 scale-95 hover:scale-100">
-                                    <Image src={p.images[0]} alt={p.title} fill className="object-cover" />
+                            <Reveal delay={0.1}>
+                                <div className="flex items-center gap-4 mb-6 md:mb-8">
+                                    <span className={`h-px w-10 ${isEven ? 'bg-rose-500' : 'bg-blue-500'}`} />
+                                    <span className="text-sm font-mono tracking-widest text-neutral-400 uppercase">
+                                        {project.category} — {project.year}
+                                    </span>
                                 </div>
-                            ))}
-                        </motion.div>
-                    </div>
+                            </Reveal>
 
-                    {/* Column 2: Speed Down */}
-                    <div className="w-1/2 h-full relative overflow-hidden pt-12">
-                        <motion.div
-                            animate={{ y: ["-50%", "0%"] }}
-                            transition={{ ease: "linear", duration: 30, repeat: Infinity }}
-                            className="w-full flex flex-col gap-4 py-4"
-                        >
-                            {[...broadcastProjects].reverse().map((p, i) => (
-                                <div key={`${p.id}-col2-${i}`} className="relative w-full aspect-[3/4] rounded-2xl overflow-hidden filter grayscale hover:grayscale-0 transition-all duration-500 opacity-60 hover:opacity-100 scale-95 hover:scale-100">
-                                    <Image src={p.images[1] || p.images[0]} alt={p.title} fill className="object-cover" />
-                                </div>
-                            ))}
+                            <Reveal delay={0.2}>
+                                <h2 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold leading-[0.9] text-white mb-8">
+                                    {project.title}
+                                </h2>
+                            </Reveal>
+
+                            <Reveal delay={0.3}>
+                                <p className="text-lg text-neutral-400 font-light leading-relaxed mb-8 md:mb-12 max-w-md">
+                                    {project.description}
+                                </p>
+                            </Reveal>
+
+                            <div className="space-y-6 border-t border-white/10 pt-8">
+                                <Reveal delay={0.4}>
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <h4 className="text-xs font-bold uppercase tracking-widest text-neutral-500 mb-2">Role</h4>
+                                            <p className="text-sm text-white">{project.role}</p>
+                                        </div>
+                                        <div>
+                                            <h4 className="text-xs font-bold uppercase tracking-widest text-neutral-500 mb-2">Location</h4>
+                                            <p className="text-sm text-white">{project.location}</p>
+                                        </div>
+                                    </div>
+                                </Reveal>
+                                <Reveal delay={0.5}>
+                                    <div>
+                                        <h4 className="text-xs font-bold uppercase tracking-widest text-neutral-500 mb-2">Services</h4>
+                                        <div className="flex flex-wrap gap-2">
+                                            {project.services.map((service, i) => (
+                                                <span key={i} className="px-3 py-1 border border-white/10 text-xs text-neutral-300 rounded-full">
+                                                    {service}
+                                                </span>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </Reveal>
+                            </div>
+
+                            <Reveal delay={0.6}>
+                                <Link href={`/work/${project.id}`} className="inline-flex items-center gap-3 mt-12 text-white group cursor-pointer">
+                                    <span className="text-lg font-bold uppercase tracking-widest group-hover:text-neutral-300 transition-colors">See Case Study</span>
+                                    <span className="text-xl transform group-hover:translate-x-2 transition-transform duration-300">→</span>
+                                </Link>
+                            </Reveal>
+
                         </motion.div>
                     </div>
 
                 </div>
             </div>
-        </div>
-    )
-}
+        </section>
+    );
+};
 
-export default function WorkSection() {
-    const targetRef = useRef<HTMLDivElement>(null);
-    const { scrollYProgress } = useScroll({
-        target: targetRef,
-    });
-
-    const smoothProgress = useSpring(scrollYProgress, {
-        stiffness: 30,
-        damping: 20,
-        mass: 1.2,
+export default function WorkPage() {
+    const { scrollYProgress } = useScroll();
+    const scaleX = useSpring(scrollYProgress, {
+        stiffness: 100,
+        damping: 30,
         restDelta: 0.001
     });
-
-    const totalItems = projects.length + 1;
-    const x = useTransform(smoothProgress, [0, 1], ["0%", "-83.33%"]);
 
     return (
         <>
             <Navbar />
-            <section ref={targetRef} className="relative h-[600vh] bg-neutral-950">
-                <div className="sticky top-0 flex h-screen items-center overflow-hidden">
-                    <motion.div style={{ x }} className="flex">
-                        <TitleCard />
-                        {projects.map((project, index) => (
-                            <ProjectCard
-                                key={project.id}
-                                project={project}
-                                index={index}
-                                progress={smoothProgress}
-                                total={totalItems - 1} // max index
-                            />
-                        ))}
-                    </motion.div>
+
+            {/* Top Progress Bar */}
+            <motion.div
+                className="fixed top-0 left-0 right-0 h-1 bg-white origin-left z-50 mix-blend-difference"
+                style={{ scaleX }}
+            />
+
+            <main className="bg-[#050505] text-white min-h-screen">
+
+                {/* Hero Section */}
+                <section className="h-[70vh] flex flex-col justify-end pb-24 px-6 relative">
+                    <div className="container mx-auto">
+                        <Reveal delay={0.1}>
+                            <h1 className="text-[12vw] md:text-[10vw] leading-[0.85] font-display font-medium uppercase tracking-tight">
+                                Selected <br />
+                                <span className="stroke-text text-transparent ml-[5vw] md:ml-[10vw]">Works</span>
+                            </h1>
+                        </Reveal>
+
+                        <div className="flex flex-col md:flex-row justify-between items-end mt-12 border-t border-white/10 pt-8">
+                            <Reveal delay={0.3}>
+                                <p className="text-neutral-400 max-w-xl text-lg md:text-xl font-light">
+                                    A curated showcase of digital transformation. <br className="hidden md:block" />
+                                    Where strategy meets aesthetic precision.
+                                </p>
+                            </Reveal>
+                            <Reveal delay={0.4}>
+                                <div className="text-sm font-mono text-neutral-500 mt-8 md:mt-0 uppercase tracking-widest">
+                                    (2023 — Present)
+                                </div>
+                            </Reveal>
+                        </div>
+                    </div>
+                </section>
+
+                {/* Projects List */}
+                <div className="relative">
+                    {projects.map((project, index) => (
+                        <ProjectSection key={project.id} project={project} index={index} />
+                    ))}
                 </div>
-            </section>
+
+                {/* Footer CTA */}
+                <section className="py-40 flex items-center justify-center bg-white text-black">
+                    <div className="text-center px-4">
+                        <Reveal>
+                            <h2 className="text-5xl md:text-8xl font-display font-bold leading-tight mb-8">
+                                Have an Idea?
+                            </h2>
+                        </Reveal>
+                        <Reveal delay={0.2}>
+                            <Link href="/contact" className="inline-block border-b-2 border-black text-2xl md:text-3xl font-bold uppercase tracking-widest pb-1 hover:text-neutral-600 hover:border-neutral-600 transition-colors">
+                                Let&apos;s Talk Business
+                            </Link>
+                        </Reveal>
+                    </div>
+                </section>
+
+            </main>
             <Footer />
         </>
     );
 }
+
+// Ensure the .stroke-text class is defined in global css for the outline effect

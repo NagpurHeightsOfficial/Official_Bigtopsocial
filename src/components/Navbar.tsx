@@ -68,9 +68,8 @@ export default function Navbar() {
                     <div className="hidden lg:flex items-center space-x-12">
                         {[
                             { label: "About", href: "/about" },
-                           
                             { label: "Work", href: "/work" },
-                            { label: "Careers", href: "/careers" },
+                            { label: "Clients", href: "/clients" },
                             { label: "Solutions", href: "/solutions" }
                         ].map((item) => (
                             <Link
@@ -142,7 +141,7 @@ export default function Navbar() {
                                     { label: "ABOUT", href: "/about" },
                                     { label: "WORK", href: "/work" },
                                     { label: "SOLUTIONS", href: "/solutions" },
-                                    { label: "CAREERS", href: "/careers" }
+                                    { label: "CLIENTS", href: "/clients" }
                                 ].map((item, i) => (
                                     <motion.div
                                         key={item.label}

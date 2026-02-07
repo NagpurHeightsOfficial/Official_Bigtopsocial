@@ -35,22 +35,22 @@ const projects: Project[] = [
   },
   {
     id: 2,
-    title: "NeoBank App",
-    category: "Product Design",
+    title: "Wave Fitness",
+    category: "Branding",
     description: "Redefining digital banking with a focus on user-centric design patterns and seamless transactional flows for the next billion users.",
     year: "2024",
-    role: "UI/UX Design",
-    services: ["App Interface", "User Research", "Prototyping", "Design System"],
+  role: "Brand Identity",
+    services: ["Logo Design", "Brand Guidelines", "Visual Assets", "Motion Design"],
     location: "London",
     images: [
-      "https://picsum.photos/seed/finance/1600/900",
-      "https://picsum.photos/seed/finance2/1600/900",
-      "https://picsum.photos/seed/finance3/1600/900",
+      "/workimages/2.1.webp",
+      "/workimages/2.2.webp",
+      "/workimages/2.3.webp",
     ]
   },
   {
     id: 3,
-    title: "Future Tech",
+    title: "Kat Expert",
     category: "Identity",
     description: "Crafting a visual identity that bridges the gap between human intuition and artificial intelligence, creating a brand that feels both futuristic and familiar.",
     year: "2024",
@@ -58,41 +58,27 @@ const projects: Project[] = [
     services: ["Logo Design", "Brand Guidelines", "Visual Assets", "Motion Design"],
     location: "San Francisco",
     images: [
-      "https://picsum.photos/seed/tech/1600/900",
-      "https://picsum.photos/seed/tech2/1600/900",
-      "https://picsum.photos/seed/tech3/1600/900",
+      "/workimages/3.1.webp",
+      "/workimages/3.2.webp",
+      "/workimages/3.3.webp",
     ]
   },
   {
     id: 4,
-    title: "Global Logistics",
-    category: "Web Platform",
-    description: "Streamlining complex supply chain data into an intuitive dashboard interface, empowering operators with real-time visibility and control.",
+    title: "Laa Boba Sip",
+    category: "Branding",
+    description: "Crafting a visual identity that bridges the gap between human intuition and artificial intelligence, creating a brand that feels both futuristic and familiar.",
     year: "2023",
-    role: "Web Development",
-    services: ["Frontend Dev", "Dashboard UI", "Data Viz", "API Integration"],
+    role: "Brand Identity",
+    services: ["Logo Design", "Brand Guidelines", "Visual Assets", "Motion Design"],
     location: "Singapore",
     images: [
-      "https://picsum.photos/seed/logistics/1600/900",
-      "https://picsum.photos/seed/logistics2/1600/900",
-      "https://picsum.photos/seed/logistics3/1600/900",
+      "/workimages/4.1.webp",
+      "/workimages/4.2.webp",
+      "/workimages/4.3.webp",
     ]
   },
-  {
-    id: 5,
-    title: "Eco Campaign",
-    category: "Marketing",
-    description: "A global campaign designed to raise awareness about sustainable energy practices through impactful visual storytelling and digital engagement.",
-    year: "2023",
-    role: "Campaign Strategy",
-    services: ["Social Media", "Content Creation", "Art Direction", "Copywriting"],
-    location: "Berlin",
-    images: [
-      "https://picsum.photos/seed/energy/1600/900",
-      "https://picsum.photos/seed/energy2/1600/900",
-      "https://picsum.photos/seed/energy3/1600/900",
-    ]
-  },
+
 ];
 
 const ProjectCard = ({ project, index, progress, total }: { project: Project, index: number, progress: MotionValue<number>, total: number }) => {

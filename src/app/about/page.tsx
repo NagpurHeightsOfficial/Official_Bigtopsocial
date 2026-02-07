@@ -5,6 +5,21 @@ import { useRef } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
+// --- Utilities ---
+const Reveal = ({ children, delay = 0, className = "" }: { children: React.ReactNode, delay?: number, className?: string }) => {
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-10%" }}
+            transition={{ duration: 0.8, delay, ease: [0.21, 0.47, 0.32, 0.98] }}
+            className={className}
+        >
+            {children}
+        </motion.div>
+    );
+};
+
 const manifestos = [
     {
         id: "01",
@@ -27,37 +42,38 @@ const manifestos = [
 ];
 
 const GridItem = ({ item, index }: { item: typeof manifestos[0]; index: number }) => {
-    const ref = useRef(null);
-    const isInView = useInView(ref, { once: true, margin: "-10%" });
+    // Reveal handles the entrance animation now, so we can simplify this component
+    // We'll wrap the inner content in Reveals for a staggered effect
 
     return (
-        <motion.div
-            ref={ref}
-            initial={{ opacity: 0, y: 50 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-            transition={{ duration: 0.8, delay: index * 0.2, ease: [0.21, 0.47, 0.32, 0.98] }}
-            className="group relative border-t border-white/10 p-8 md:p-12 lg:p-16 flex flex-col justify-between hover:bg-white/5 transition-colors duration-500"
-        >
+        <div className="group relative border-t border-white/10 p-8 md:p-12 lg:p-16 flex flex-col justify-between hover:bg-white/5 transition-colors duration-500 h-full">
+
             {/* Hover Gradient Glow */}
             <div className={`absolute inset-0 bg-gradient-to-br ${item.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-700 pointer-events-none`} />
 
             <div className="mb-12">
-                <span className="text-xs font-mono text-neutral-500 mb-4 block tracking-widest">
-                    {item.id} / CONCEPT
-                </span>
-                <h3 className="text-4xl md:text-5xl lg:text-6xl font-display uppercase tracking-tighter text-white group-hover:text-blue-400 transition-colors duration-300">
-                    {item.title}
-                </h3>
+                <Reveal delay={0.1}>
+                    <span className="text-xs font-mono text-neutral-500 mb-4 block tracking-widest">
+                        {item.id} / CONCEPT
+                    </span>
+                </Reveal>
+                <Reveal delay={0.2}>
+                    <h3 className="text-4xl md:text-5xl lg:text-6xl font-display uppercase tracking-tighter text-white group-hover:text-blue-400 transition-colors duration-300">
+                        {item.title}
+                    </h3>
+                </Reveal>
             </div>
 
-            <p className="text-lg md:text-xl text-neutral-400 font-light max-w-md leading-relaxed group-hover:text-white transition-colors duration-300">
-                {item.description}
-            </p>
+            <Reveal delay={0.3}>
+                <p className="text-lg md:text-xl text-neutral-400 font-light max-w-md leading-relaxed group-hover:text-white transition-colors duration-300">
+                    {item.description}
+                </p>
+            </Reveal>
 
             {/* Corner Accent */}
             <div className="absolute top-0 right-0 w-px h-16 bg-white/10 group-hover:h-full group-hover:bg-blue-500/50 transition-all duration-700 delay-100" />
             <div className="absolute bottom-0 left-0 w-16 h-px bg-white/10 group-hover:w-full group-hover:bg-blue-500/50 transition-all duration-700 delay-100" />
-        </motion.div>
+        </div>
     );
 };
 
@@ -94,31 +110,25 @@ export default function AboutSection() {
 
                     {/* Header Statement */}
                     <div className="mb-32 md:mb-48 pl-4 md:pl-12 border-l border-white/10">
-                        <motion.h2
-                            initial={{ opacity: 0, x: -20 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 1 }}
-                            viewport={{ once: true }}
-                            className="text-[12vw] md:text-[8vw] font-display font-medium leading-[0.8] tracking-tight text-white uppercase"
-                        >
-                            We Are <br />
-                            <span className="text-transparent stroke-text">The Vibe</span>
-                        </motion.h2>
-                        <motion.p
-                            initial={{ opacity: 0 }}
-                            whileInView={{ opacity: 1 }}
-                            transition={{ duration: 1, delay: 0.5 }}
-                            viewport={{ once: true }}
-                            className="mt-8 text-xl md:text-2xl text-neutral-400 max-w-2xl font-light"
-                        >
-                            Bigtop isn&apos;t an agency. It&apos;s a cult of creativity. We operate in the shadows of convention to shed light on what&apos;s possible.
-                        </motion.p>
+                        <Reveal>
+                            <h2 className="text-[12vw] md:text-[8vw] font-display font-medium leading-[0.8] tracking-tight text-white uppercase">
+                                We Are <br />
+                                <span className="text-transparent stroke-text">The Vibe</span>
+                            </h2>
+                        </Reveal>
+                        <Reveal delay={0.2}>
+                            <p className="mt-8 text-xl md:text-2xl text-neutral-400 max-w-2xl font-light">
+                                Bigtop isn&apos;t an agency. It&apos;s a cult of creativity. We operate in the shadows of convention to shed light on what&apos;s possible.
+                            </p>
+                        </Reveal>
                     </div>
 
                     {/* The Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border-b border-white/10">
                         {manifestos.map((item, i) => (
-                            <GridItem key={i} item={item} index={i} />
+                            <div key={i} className="h-full">
+                                <GridItem item={item} index={i} />
+                            </div>
                         ))}
                     </div>
 
