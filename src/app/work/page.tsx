@@ -117,7 +117,7 @@ const ProjectSection = ({ project, index }: { project: Project; index: number })
     const isEven = index % 2 === 0;
 
     return (
-        <section ref={container} className="min-h-screen relative py-20 md:py-32 overflow-hidden">
+        <section ref={container} className="relative py-12 md:min-h-screen md:py-32 overflow-hidden">
 
             {/* Animated Separator Line */}
             <motion.div
@@ -141,7 +141,7 @@ const ProjectSection = ({ project, index }: { project: Project; index: number })
                 <div className={`flex flex-col md:flex-row gap-12 md:gap-24 items-center ${isEven ? '' : 'md:flex-row-reverse'}`}>
 
                     {/* Project Image (Parallax Window) */}
-                    <div className="w-full md:w-3/5 h-[50vh] md:h-[70vh] relative overflow-hidden group rounded-sm">
+                    <div className="w-full md:w-3/5 aspect-[16/9] relative overflow-hidden group rounded-sm">
                         <motion.div
                             style={{ scale: scaleImage }}
                             className="w-full h-full relative"
@@ -165,12 +165,7 @@ const ProjectSection = ({ project, index }: { project: Project; index: number })
                         {/* Overlay Decor */}
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 pointer-events-none" />
 
-                        {/* Hover Overlay Button */}
-                        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
-                            <div className="w-24 h-24 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center">
-                                <span className="text-white text-sm font-bold uppercase tracking-widest">View</span>
-                            </div>
-                        </div>
+
                     </div>
 
                     {/* Project Details */}
@@ -262,7 +257,7 @@ export default function WorkPage() {
             <main className="bg-[#050505] text-white min-h-screen">
 
                 {/* Hero Section */}
-                <section className="h-[70vh] flex flex-col justify-end pb-24 px-6 relative">
+                <section className="h-[40vh] md:h-[70vh] flex flex-col justify-end pb-12 md:pb-24 px-6 relative">
                     <div className="container mx-auto">
                         <Reveal delay={0.1}>
                             <h1 className="text-[12vw] md:text-[10vw] leading-[0.85] font-display font-medium uppercase tracking-tight">
@@ -304,7 +299,7 @@ export default function WorkPage() {
                         </Reveal>
                         <Reveal delay={0.2}>
                             <Link href="/contact" className="inline-block border-b-2 border-black text-2xl md:text-3xl font-bold uppercase tracking-widest pb-1 hover:text-neutral-600 hover:border-neutral-600 transition-colors">
-                                Let&apos;s Talk Business
+                                Let&apos;s Talk
                             </Link>
                         </Reveal>
                     </div>

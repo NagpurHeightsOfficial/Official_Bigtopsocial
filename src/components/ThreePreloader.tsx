@@ -206,7 +206,7 @@ export default function ThreePreloader() {
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        className="absolute bottom-12 font-sans text-white/40 text-xs tracking-[0.3em] font-medium"
+                        className="absolute bottom-15 font-sans text-white/70 text-xl tracking-[0.3em] font-medium"
                     >
                         LOADING {Math.round(progress)}%
                     </motion.div>

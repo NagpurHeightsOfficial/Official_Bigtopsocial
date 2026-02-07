@@ -2,6 +2,8 @@
 
 import { motion, useScroll, useTransform, useSpring, useInView } from "framer-motion";
 import { useRef } from "react";
+import Image from "next/image";
+import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
@@ -25,6 +27,7 @@ const solutions = [
         id: "01",
         title: "Brand Architecture",
         subtitle: "Identity & Strategy",
+        image: "/services/1.png", // Add your image path here
         description: "We don't just design logos; we build belief systems. Your brand is a living entity, and we define its soul, voice, and visual language to command attention in a crowded void.",
         deliverables: ["Visual Identity System", "Brand Voice/Tone", "Market Positioning", "Rebranding Strategy"],
         align: "right"
@@ -33,6 +36,7 @@ const solutions = [
         id: "02",
         title: "Performance Media",
         subtitle: "Paid Acquisition",
+        image: "/services/2.png", // Add your image path here
         description: "Art meets algorithm. We deploy capital with surgical precision, turning ad spend into revenue. No vanity metrics—just cold, hard ROI across Meta, Google, and TikTok.",
         deliverables: ["Campaign Strategy", "Creative Production", "A/B Testing", "Conversion Optimization"],
         align: "left"
@@ -41,6 +45,7 @@ const solutions = [
         id: "03",
         title: "Content Production",
         subtitle: "Film & Photo",
+        image: "/services/3.png", // Add your image path here
         description: "Cinematic storytelling that stops the scroll. From high-gloss commercial productions to raw social-first content, we capture the shots that others miss.",
         deliverables: ["TVC & Commercials", "Social Content Reels", "Product Photography", "Art Direction"],
         align: "right"
@@ -49,6 +54,7 @@ const solutions = [
         id: "04",
         title: "Digital Ecosystems",
         subtitle: "Web & Tech",
+        image: "/services/4.png", // Add your image path here
         description: "Websites that feel like worlds. We craft immersive digital experiences that merge aesthetic perfection with seamless functionality and SEO dominance.",
         deliverables: ["Web Design (UX/UI)", "Full Stack Development", "SEO & Analytics", "eCommerce Solutions"],
         align: "left"
@@ -101,10 +107,21 @@ const SolutionSection = ({ item, index }: { item: typeof solutions[0]; index: nu
                             transition={{ duration: 1 }}
                             className="relative aspect-[4/5] md:aspect-square w-full h-full border border-white/10 p-4 md:p-8"
                         >
-                            <div className="w-full h-full bg-neutral-900/50 relative overflow-hidden">
-                                {/* Abstract animated lines */}
-                                <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.02)_50%,transparent_75%,transparent_100%)] bg-[length:250%_250%] animate-[gradient_15s_linear_infinite]" />
-                                <div className="absolute bottom-4 left-4 text-xs font-mono text-neutral-500">
+                            <div className="w-full h-full bg-neutral-900/50 relative overflow-hidden group">
+                                {item.image ? (
+                                    <Image
+                                        src={item.image}
+                                        alt={item.title}
+                                        fill
+                                        className="object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-700"
+                                    />
+                                ) : (
+                                    <>
+                                        {/* Abstract animated lines (fallback if no image) */}
+                                        <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.02)_50%,transparent_75%,transparent_100%)] bg-[length:250%_250%] animate-[gradient_15s_linear_infinite]" />
+                                    </>
+                                )}
+                                <div className="absolute bottom-4 left-4 text-xs font-mono text-neutral-500 z-10">
                                     // {item.subtitle.toUpperCase()}
                                 </div>
                                 <div className={`absolute w-32 h-32 bg-white/5 blur-[80px] rounded-full ${isLeft ? 'top-0 right-0' : 'bottom-0 left-0'}`} />

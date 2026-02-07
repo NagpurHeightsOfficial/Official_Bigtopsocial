@@ -45,7 +45,7 @@ export default function Cursor() {
 
     return (
         <motion.div
-            className="fixed top-0 left-0 w-4 h-4 rounded-full border border-white pointer-events-none z-[9999] mix-blend-difference"
+            className="hidden md:block fixed top-0 left-0 w-4 h-4 rounded-full border border-white pointer-events-none z-[9999] mix-blend-difference"
             style={{
                 x: cursorX, // Direct mapping, no spring physics
                 y: cursorY, // Direct mapping, no spring physics
