@@ -25,56 +25,61 @@ const projects: Project[] = [
         id: 1,
         title: "ELkem",
         category: "Branding",
-        description: "A new-generation design language shaping the future brand direction. We crafted a corporate gifting experience that bridges industrial legacy with modern minimalism.",
+        description: "A new-generation design language shaping the future brand direction, brought to life through a festive corporate gifting brochure crafted for large-scale distribution.",
         year: "2025",
-        role: "Visual Identity",
-        services: ["Brochure Design", "Art Direction", "Print Production"],
+        role: "Print Media Service",
+        services: ["Brochure Design", "Flyer Design", "Menu Design", "Poster Design"],
         location: "Norway",
-        images: ["/workimages/1.1.webp"]
+        images: [
+            "/workimages/1.1.webp",
+            "/workimages/1.2.webp",
+            "/workimages/1.3.webp",
+        ],
     },
     {
         id: 2,
-        title: "NeoBank",
-        category: "Product Design",
-        description: "Redefining digital banking for the next billion users. A frictionless mobile experience that turns complex financial data into intuitive, actionable insights.",
+        title: "Wave Fitness",
+        category: "Branding",
+        description: "Redefining digital banking with a focus on user-centric design patterns and seamless transactional flows for the next billion users.",
         year: "2024",
-        role: "UI/UX Design",
-        services: ["App Interface", "Design System", "Prototyping"],
+        role: "Brand Identity",
+        services: [""],
         location: "London",
-        images: ["https://picsum.photos/seed/finance/1600/1200"]
+        images: [
+            "/workimages/2.1.webp",
+            "/workimages/2.2.webp",
+            "/workimages/2.3.webp",
+        ]
     },
     {
         id: 3,
-        title: "Future Tech",
+        title: "Kat Expert",
         category: "Identity",
-        description: "Visualizing the invisible. A brand identity system for an AI research lab, bridging the gap between human intuition and machine intelligence.",
+        description: "Crafting a visual identity that bridges the gap between human intuition and artificial intelligence, creating a brand that feels both futuristic and familiar.",
         year: "2024",
         role: "Brand Identity",
-        services: ["Logo Design", "Motion Graphics", "3D Rendering"],
+        services: ["Logo Design", "Brand Guidelines", "Visual Assets", "Motion Design"],
         location: "San Francisco",
-        images: ["https://picsum.photos/seed/tech/1600/1200"]
+        images: [
+            "/workimages/3.1.webp",
+            "/workimages/3.2.webp",
+            "/workimages/3.3.webp",
+        ]
     },
     {
         id: 4,
-        title: "Logos Chain",
-        category: "Web Platform",
-        description: "Streamlining global supply chain data into a single source of truth. A high-performance dashboard empowering operators with real-time visibility.",
+        title: "Laa Boba Sip",
+        category: "Branding",
+        description: "Crafting a visual identity that bridges the gap between human intuition and artificial intelligence, creating a brand that feels both futuristic and familiar.",
         year: "2023",
-        role: "Web Development",
-        services: ["Frontend Dev", "Data Visualization", "API Integration"],
+        role: "Brand Identity",
+        services: ["Logo Design", "Brand Guidelines", "Visual Assets", "Motion Design"],
         location: "Singapore",
-        images: ["https://picsum.photos/seed/logistics/1600/1200"]
-    },
-    {
-        id: 5,
-        title: "Eco Energy",
-        category: "Marketing",
-        description: "A global campaign raising awareness for sustainable energy. Impactful visual storytelling that drove 200% engagement across social channels.",
-        year: "2023",
-        role: "Campaign Strategy",
-        services: ["Social Media", "Video Production", "Copywriting"],
-        location: "Berlin",
-        images: ["https://picsum.photos/seed/energy/1600/1200"]
+        images: [
+            "/workimages/4.1.webp",
+            "/workimages/4.2.webp",
+            "/workimages/4.3.webp",
+        ]
     },
 ];
 

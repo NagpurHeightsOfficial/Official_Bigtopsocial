@@ -40,7 +40,7 @@ const projects: Project[] = [
     description: "Redefining digital banking with a focus on user-centric design patterns and seamless transactional flows for the next billion users.",
     year: "2024",
   role: "Brand Identity",
-    services: ["Logo Design", "Brand Guidelines", "Visual Assets", "Motion Design"],
+    services: [""],
     location: "London",
     images: [
       "/workimages/2.1.webp",
