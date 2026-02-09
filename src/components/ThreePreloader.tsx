@@ -7,7 +7,7 @@ import * as THREE from "three";
 import { AnimatePresence, motion } from "framer-motion";
 
 // --- Configuration ---
-const PRELOADER_DURATION = 2.5; // Loop duration in seconds
+const PRELOADER_DURATION = 2.0; // Loop duration in seconds
 const ANIM_SPEED = 1.0;
 const COLOR_BRAND = "#4CA9FF"; // Reference Blue
 
@@ -17,7 +17,7 @@ function ChevronShape() {
         const shape = new THREE.Shape();
         // Metric parameters for a sharp, balanced chevron
         const width = 1.0;
-        const thickness = 0.35;
+        const thickness = 0.38;
         const height = 0.8;
 
         // Draw from top apex clockwise
@@ -170,7 +170,7 @@ export default function ThreePreloader() {
     const [progress, setProgress] = useState(0);
 
     useEffect(() => {
-        const duration = 4000;
+        const duration = 3000;
         const interval = 50;
         const steps = duration / interval;
         let currentStep = 0;

@@ -311,4 +311,4 @@ export default function WorkPage() {
     );
 }
 
-// Ensure the .stroke-text class is defined in global css for the outline effect
+

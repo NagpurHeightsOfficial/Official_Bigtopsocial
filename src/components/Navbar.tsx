@@ -137,7 +137,7 @@ export default function Navbar() {
                         <div className="container mx-auto px-6 flex-1 py-10 flex flex-col justify-center items-center">
                             <div className="flex flex-col items-center space-y-8 text-center">
                                 {[
-                                 
+
                                     { label: "ABOUT", href: "/about" },
                                     { label: "WORK", href: "/work" },
                                     { label: "SOLUTIONS", href: "/solutions" },
@@ -162,8 +162,8 @@ export default function Navbar() {
 
                             {/* Footer / Socials inside Mobile Menu */}
                             <div className="mt-20 flex flex-wrap justify-center gap-8 text-[10px] text-neutral-500 uppercase tracking-[0.25em] font-bold">
-                                <Link href="#" className="hover:text-white transition-colors">LinkedIn</Link>
-                                <Link href="https://www.instagram.com/bigtopsocial" className="hover:text-white transition-colors">Instagram</Link>
+                                <Link href="https://www.linkedin.com/company/bigtopsocial" className="hover:text-white transition-colors">LinkedIn</Link>
+                                <Link href="https://www.instagram.com/bigtopsocial.official/" className="hover:text-white transition-colors">Instagram</Link>
 
                             </div>
                         </div>

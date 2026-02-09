@@ -62,7 +62,7 @@ export default function Footer() {
                         {/* Social Icons Placeholder */}
 
                         <Link href="https://www.linkedin.com/company/bigtopsocial" className="hover:text-black">LinkedIn</Link>
-                        <Link href="https://www.instagram.com/bigtopsocial" className="hover:text-black">Instagram</Link>
+                        <Link href="https://www.instagram.com/bigtopsocial.official/" className="hover:text-black">Instagram</Link>
                     </div>
                 </div>
 

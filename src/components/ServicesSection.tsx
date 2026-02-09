@@ -42,7 +42,7 @@ export default function ServicesSection() {
     const [activeId, setActiveId] = useState<number | null>(2); // Default open second item
 
     return (
-        <section className="py-24 bg-white">
+        <section className="py-24 bg-white -mb-23">
             <div className="container mx-auto px-6 mb-12">
                 <h2 className="text-4xl md:text-6xl font-display font-bold text-black mb-4">
                     Our Expertise

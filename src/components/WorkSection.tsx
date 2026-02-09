@@ -39,7 +39,7 @@ const projects: Project[] = [
     category: "Branding",
     description: "Redefining digital banking with a focus on user-centric design patterns and seamless transactional flows for the next billion users.",
     year: "2024",
-  role: "Brand Identity",
+    role: "Brand Identity",
     services: [""],
     location: "London",
     images: [
@@ -117,7 +117,7 @@ const ProjectCard = ({ project, index, progress, total }: { project: Project, in
           {/* Image Frame */}
           <motion.div
             style={{ scale, x }}
-            className="relative w-full h-full md:h-[90%] md:ml-[-5%] overflow-hidden bg-neutral-900 md:mt-12"
+            className="relative w-full h-full overflow-hidden bg-neutral-900"
           >
             <AnimatePresence mode="popLayout">
               <motion.div
@@ -240,7 +240,8 @@ const TitleCard = () => {
           {/* Bottom Scroll Indicator */}
           <div className="absolute bottom-12 left-8 md:left-16 lg:left-24 flex items-center gap-4 animate-pulse">
             <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center">
-              <span className="text-white text-xl">↓</span>
+              <span className="text-white text-xl md:hidden">↑</span>
+              <span className="text-white text-xl hidden md:block">↓</span>
             </div>
             <span className="text-xs font-bold uppercase tracking-widest text-white/30">Scroll to Explore</span>
           </div>

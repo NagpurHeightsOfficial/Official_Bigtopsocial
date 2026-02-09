@@ -100,7 +100,7 @@ export default function ProductionSection() {
 
                 {/* Header content */}
                 <div className="text-center mb-24 relative">
-                    <span className="text-gray-500 uppercase tracking-widest text-sm mb-2 block font-medium">(Portfolio)</span>
+                    <span className="text-gray-500 uppercase tracking-widest text-sm mb-16 md:mb-2 block font-medium">(Portfolio)</span>
 
                     {/* Parallax Giant Text */}
                     <div className="relative">
