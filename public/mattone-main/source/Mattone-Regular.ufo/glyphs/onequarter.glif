@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="onequarter" format="2">
+  <advance width="1184"/>
+  <unicode hex="00BC"/>
+  <outline>
+    <component base="foursuperior" xOffset="633" yOffset="-300" identifier="C3A450A4"/>
+    <component base="fraction" xOffset="234"/>
+    <component base="onesuperior" xOffset="-1" identifier="D62E66F2"/>
+  </outline>
+  <lib>
+    <dict>
+      <key>public.objectLibs</key>
+      <dict>
+        <key>C3A450A4</key>
+        <dict>
+          <key>com.schriftgestaltung.alignment</key>
+          <integer>-1</integer>
+        </dict>
+        <key>D62E66F2</key>
+        <dict>
+          <key>com.schriftgestaltung.alignment</key>
+          <integer>-1</integer>
+        </dict>
+      </dict>
+    </dict>
+  </lib>
+</glyph>

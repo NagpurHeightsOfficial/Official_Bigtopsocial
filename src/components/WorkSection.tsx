@@ -220,9 +220,9 @@ const TitleCard = () => {
 
           <div className="mb-8">
             <h2 className="text-7xl md:text-9xl font-display font-medium text-white tracking-tighter leading-[0.9]">
-              Visuals <br />
+              Visuals
               <span className="italic text-neutral-500 font-light">That</span> <br />
-              Speak.
+              <span className="text-[22vw] md:text-[140px] leading-none">Speak.</span>
             </h2>
           </div>
 
@@ -233,7 +233,7 @@ const TitleCard = () => {
 
             <div className="flex items-center gap-3">
               <div className="h-[1px] w-12 bg-white/30" />
-              <span className="text-xs font-bold uppercase tracking-widest text-white/50">Since 2024</span>
+              <span className="text-xs font-bold uppercase tracking-widest text-white/50">Since 2025</span>
             </div>
           </div>
 
@@ -250,7 +250,7 @@ const TitleCard = () => {
         {/* Right Column: Kinetic Gallery (Marquee) */}
         <div className="hidden md:flex flex-1 relative h-full overflow-hidden mask-gradient-b">
           {/* Overlay Gradient for smooth fade top/bottom */}
-          <div className="absolute inset-0 z-10 bg-gradient-to-b from-neutral-950 via-transparent to-neutral-950 pointer-events-none" />
+          <div className="absolute inset-0 z-10 bg-gradient-to-b from-neutral-550 via-transparent to-neutral-950 pointer-events-none" />
 
           {/* Column 1: Speed Up */}
           <div className="w-1/2 h-full relative overflow-hidden">

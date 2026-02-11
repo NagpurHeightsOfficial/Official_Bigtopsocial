@@ -1,4 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap');
 @import "tailwindcss";
+
+.font-bricolage {
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-weight: 700;
+  /* Default weight */
+}
+
+@font-face {
+  font-family: 'Mattone';
+  src: url('/mattone-main/fonts/Mattone-Black.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Mattone';
+  src: url('/mattone-main/fonts/Mattone-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Mattone';
+  src: url('/mattone-main/fonts/Mattone-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+.font-mattone {
+  font-family: 'Mattone', sans-serif;
+}
 
 @theme {
   --font-sans: var(--font-ronzino);

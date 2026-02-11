@@ -1,7 +1,9 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useState } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useState, useRef } from "react";
+
+// ... imports
 
 const services = [
     {
@@ -39,15 +41,21 @@ const services = [
 ];
 
 export default function ServicesSection() {
-    const [activeId, setActiveId] = useState<number | null>(2); // Default open second item
+    const [activeId, setActiveId] = useState<number | null>(2);
 
     return (
-        <section className="py-24 bg-white -mb-23">
-            <div className="container mx-auto px-6 mb-12">
-                <h2 className="text-4xl md:text-6xl font-display font-bold text-black mb-4">
-                    Our Expertise
-                </h2>
-                <div className="h-1 w-20 bg-black" />
+        <section className="py-24 bg-white -mb-23 overflow-hidden">
+            <div className="container mx-auto px-6 mb-16 md:mb-24">
+                <div className="flex flex-col gap-2">
+                    <span className="text-neutral-500 font-bold uppercase tracking-widest text-xs md:text-sm mb-2 pl-1">
+                        ( Capabilities )
+                    </span>
+                    <h2 className="flex flex-col md:block text-6xl md:text-9xl font-display font-medium text-black tracking-tighter leading-[0.9]">
+                        <span className="font-serif italic text-neutral-400 font-light mr-4">Our</span>
+                        <span>Expertise.</span>
+                    </h2>
+                </div>
+                <div className="w-full h-[1px] bg-black/10 mt-8 md:mt-12" />
             </div>
 
             {/* Interactive Strip Container */}

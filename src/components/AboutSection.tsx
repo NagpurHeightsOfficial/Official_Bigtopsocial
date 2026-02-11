@@ -80,7 +80,7 @@ export default function AboutSection() {
             {/* Massive Scrolling Typography (WorkSection Style) */}
             <div className="w-full overflow-hidden mb-24 border-y border-white/7 py-8 relative z-0 flex justify-center items-center">
                 <motion.div className="whitespace-nowrap">
-                    <h2 className="text-[12vw] leading-[0.8] font-display font-medium text-transparent uppercase select-none opacity-60 text-center" style={{ WebkitTextStroke: "1px rgba(100, 100, 100, 0.5)" }}>
+                    <h2 className="text-[10vw] leading-[0.8] font-display font-medium text-transparent uppercase select-none opacity-60 text-center" style={{ WebkitTextStroke: "1px rgba(100, 100, 100, 0.8)" }}>
                         CREATIVE CULT
                     </h2>
                 </motion.div>

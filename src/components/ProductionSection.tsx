@@ -1,31 +1,47 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { motion, useScroll, useTransform, useInView } from "framer-motion";
+import { useRef, useMemo, memo } from "react";
 
-const PhoneMockup = ({ src, videoSrc, backImage, delay }: { src?: string; videoSrc?: string; backImage?: string; delay: number }) => {
+// Memoized Thickness Layers to avoid re-computation on every render
+const ThicknessLayers = memo(() => (
+    <>
+        {[...Array(15)].map((_, i) => (
+            <div
+                key={i}
+                className="absolute inset-0 w-full h-full bg-[#FD7A30] rounded-[50px] backface-visible border border-[#FD7A30]/30"
+                style={{
+                    // Spread layers from -14px to +14px to fill the 30px gap
+                    transform: `translateZ(${-14 + i * 2}px)`,
+                }}
+            />
+        ))}
+    </>
+));
+ThicknessLayers.displayName = "ThicknessLayers";
+
+// Memoized Phone Mockup Component
+const PhoneMockup = memo(({ src, videoSrc, backImage, delay }: { src?: string; videoSrc?: string; backImage?: string; delay: number }) => {
     return (
         <div className="relative w-[300px] h-[600px] [perspective:1000px]">
             <motion.div
                 initial={{ rotateY: 0 }}
                 whileInView={{ rotateY: 180 }}
-                transition={{ duration: 0.8, delay, ease: "easeInOut" }}
+                // Smoother spring transition for a premium "mechanical" feel
+                transition={{
+                    duration: 1.2,
+                    delay,
+                    type: "spring",
+                    stiffness: 40,
+                    damping: 10,
+                    mass: 0.8
+                }}
                 viewport={{ once: true, amount: 0.5 }}
-                className="w-full h-full relative"
+                className="w-full h-full relative will-change-transform"
                 style={{ transformStyle: "preserve-3d" }}
             >
                 {/* --- 3D THICKNESS/LAYERS (Spine) --- */}
-                {/* Stack many dark layers to simulate the phone's side thickness (approx 30px total scale) */}
-                {[...Array(15)].map((_, i) => (
-                    <div
-                        key={i}
-                        className="absolute inset-0 w-full h-full bg-[#FD7A30] rounded-[50px] backface-visible border border-[#FD7A30]/30"
-                        style={{
-                            // Spread layers from -14px to +14px to fill the 30px gap
-                            transform: `translateZ(${-14 + i * 2}px)`,
-                        }}
-                    />
-                ))}
+                <ThicknessLayers />
 
                 {/* --- FRONT FACE (iPhone Back - Initially Visible) --- */}
                 <div
@@ -34,18 +50,16 @@ const PhoneMockup = ({ src, videoSrc, backImage, delay }: { src?: string; videoS
                 >
                     {backImage ? (
                         <div className="relative w-full h-full">
-                            <img src={backImage} alt="Phone Back" className="w-full h-full object-cover scale-x-140 scale-y-123" />
-                            {/* Optional: Add a subtle camera bump overlay even on custom images if desired, or keep it clean */}
+                            <img
+                                src={backImage}
+                                alt="Phone Back"
+                                className="w-full h-full object-cover scale-x-140 scale-y-123"
+                                loading="lazy"
+                            />
                         </div>
                     ) : (
-                        /* Default CSS Back */
                         <div className="flex flex-col items-center justify-center w-full h-full bg-neutral-900">
-                            {/* ... (Kept simple for brevity if fallback is used, though user has backImage) ... */}
-                            <div className="w-16 h-16 opacity-30">
-                                <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full text-white">
-                                    <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.8-1.31.02-2.3-1.23-3.14-2.47-1.71-2.47-3.03-7-1.26-10.09C5.64 8.7 7.15 7.85 8.6 7.82c1.26-.03 2.45.85 3.22.85.76 0 2.18-.85 3.66-.75 2.49.19 4.38 1.68 5.43 3.23-2.73 1.63-2.27 6.64 1.8 7.37zM13 3.5c.67-1.74 2.87-2.67 4.7-2.5C18.06 2.86 16.5 5.25 13 3.5z" />
-                                </svg>
-                            </div>
+                            {/* Fallback pattern */}
                         </div>
                     )}
                 </div>
@@ -71,9 +85,10 @@ const PhoneMockup = ({ src, videoSrc, backImage, delay }: { src?: string; videoS
                                 loop
                                 muted
                                 playsInline
+                                preload="metadata"
                             />
                         ) : (
-                            <img src={src} alt="Portfolio Work" className="w-full h-full object-cover" />
+                            <img src={src} alt="Portfolio Work" className="w-full h-full object-cover" loading="lazy" />
                         )}
 
                         {/* Fake UI Overlay */}
@@ -83,7 +98,8 @@ const PhoneMockup = ({ src, videoSrc, backImage, delay }: { src?: string; videoS
             </motion.div>
         </div>
     );
-}
+});
+PhoneMockup.displayName = "PhoneMockup";
 
 export default function ProductionSection() {
     const containerRef = useRef(null);
@@ -92,7 +108,33 @@ export default function ProductionSection() {
         offset: ["start end", "end start"],
     });
 
+    // Optimize parallax: Ensure it relies on GPU-only properties (which y is)
     const textY = useTransform(scrollYProgress, [0, 1], [-50, 50]);
+
+    // Define mock data to keep JSX clean
+    const phones = useMemo(() => [
+        {
+            id: 1,
+            videoSrc: "/9.mp4",
+            src: "https://picsum.photos/seed/mobile1/400/800",
+            backImage: "/images/ChatGPT Image Feb 5, 2026, 02_45_12 PM.png",
+            delay: 0.1
+        },
+        {
+            id: 2,
+            videoSrc: "/8.mp4",
+            src: "https://picsum.photos/seed/mobile2/400/800",
+            backImage: "/images/ChatGPT Image Feb 5, 2026, 02_45_12 PM.png",
+            delay: 0.3
+        },
+        {
+            id: 3,
+            videoSrc: "/6.mp4",
+            src: "https://picsum.photos/seed/mobile3/400/800",
+            backImage: "/images/ChatGPT Image Feb 5, 2026, 02_45_12 PM.png",
+            delay: 0.5
+        }
+    ], []);
 
     return (
         <section ref={containerRef} className="py-32 bg-gray-50 relative overflow-hidden">
@@ -106,7 +148,7 @@ export default function ProductionSection() {
                     <div className="relative">
                         <motion.h2
                             style={{ y: textY }}
-                            className="text-[12vw] md:text-[15vw] leading-none font-display font-bold text-gray-200 select-none whitespace-nowrap"
+                            className="text-[12vw] md:text-[15vw] leading-none font-display font-bold text-gray-200 select-none whitespace-nowrap will-change-transform"
                         >
                             Production
                         </motion.h2>
@@ -115,26 +157,15 @@ export default function ProductionSection() {
 
                 {/* Phones Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-18 -mt-10 md:-mt-40 z-20 perspective-1000">
-                    <PhoneMockup
-                        videoSrc="/9.mp4"
-                        src="https://picsum.photos/seed/mobile1/400/800"
-
-                        backImage="/images/ChatGPT Image Feb 5, 2026, 02_45_12 PM.png"
-                        delay={0.1}
-                    />
-                    <PhoneMockup
-                        videoSrc="/8.mp4"
-                        src="https://picsum.photos/seed/mobile2/400/800"
-                        backImage="/images/ChatGPT Image Feb 5, 2026, 02_45_12 PM.png"
-                        delay={0.3}
-                    />
-                    <PhoneMockup
-                        videoSrc="/1.mp4"
-                        src="https://picsum.photos/seed/mobile3/400/800"
-                        backImage="/images/ChatGPT Image Feb 5, 2026, 02_45_12 PM.png"
-                        delay={0.5}
-                    />
-
+                    {phones.map((phone) => (
+                        <PhoneMockup
+                            key={phone.id}
+                            videoSrc={phone.videoSrc}
+                            src={phone.src}
+                            backImage={phone.backImage}
+                            delay={phone.delay}
+                        />
+                    ))}
                 </div>
 
             </div>

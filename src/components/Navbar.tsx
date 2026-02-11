@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from "framer-motion";
+import { LayoutTextFlip } from "@/components/ui/layout-text-flip";
 
 export default function Navbar() {
     const [isVisible, setIsVisible] = useState(true);
@@ -55,12 +56,17 @@ export default function Navbar() {
             >
                 <div className="container mx-auto px-6 md:px-10 flex justify-between items-center">
 
-                    {/* Logo */}
-                    <Link href="/" className="flex items-center gap-1 z-50 mix-blend-difference">
+                    {/* Logo using LayoutTextFlip */}
+                    <Link href="/" className="flex items-center gap-0 z-50 mix-blend-difference">
                         <img
-                            src="/images/main.logo.png"
-                            alt="Big Top Social"
-                            className="h-6 md:h-8 w-auto object-contain invert-0"
+                            src="/images/logo.icon.png"
+                            alt="Logo"
+                            className="h-10 md:h-10 w-auto object-contain"
+                        />
+                        <LayoutTextFlip
+                            text="BIGTOP"
+                            words={["SOCIAL", "TECH", "CREATIVE", "STUDIO"]}
+                            className="text-[25px] md:text-4xl font-black tracking-tighter text-white"
                         />
                     </Link>
 
@@ -120,7 +126,11 @@ export default function Navbar() {
                         {/* Header with Close Button */}
                         <div className="container mx-auto px-6 py-6 flex justify-between items-center border-b border-white/10 -mt-2">
                             <Link href="/" className="flex items-center gap-1">
-                                <img src="/images/main.logo.png" alt="Big Top Social" className="h-6 w-auto object-contain " />
+                                <LayoutTextFlip
+                                    text="BIGTOP"
+                                    words={["SOCIAL", "AGENCY", "CREATIVE", "STUDIO"]}
+                                    className="text-2xl md:text-4xl font-black tracking-tighter text-white"
+                                />
                             </Link>
 
                             <button

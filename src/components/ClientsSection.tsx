@@ -65,13 +65,13 @@ export default function ClientsSection() {
     const row2 = logos.slice(7);
 
     return (
-        <section className="py-16 md:py-24 bg-white relative overflow-hidden">
+        <section className="py-8 md:py-24 bg-white relative overflow-hidden">
             {/* Gradient Masks */}
             <div className="absolute top-0 left-0 w-16 md:w-64 h-full bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
             <div className="absolute top-0 right-0 w-16 md:w-64 h-full bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
 
-            <div className="container mx-auto px-6 mb-8 md:mb-12 text-center">
-                <span className="text-gray-400 font-medium tracking-widest text-xs md:text-sm uppercase block mb-4">Press & Partners</span>
+            <div className="container mx-auto px-6 mb-4 md:mb-12 text-center">
+                <span className="text-gray-400 font-medium tracking-widest text-xs md:text-sm uppercase block mb-4">Partners</span>
                 <h2 className="text-3xl md:text-5xl font-display font-bold text-black">
                     Featured In
                 </h2>
