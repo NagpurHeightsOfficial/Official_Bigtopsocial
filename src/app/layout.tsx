@@ -45,6 +45,13 @@ const ronzino = localFont({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://bigtopsocial.com'),
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+    ],
+    shortcut: '/favicon.ico',
+    apple: '/favicon.ico',
+  },
   title: {
     default: "BigTopSocial | Social Media Agency",
     template: "%s | BigTopSocial"
