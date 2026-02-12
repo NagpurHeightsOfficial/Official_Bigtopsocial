@@ -15,73 +15,46 @@ export const LayoutTextFlip = ({
     duration?: number;
     className?: string;
 }) => {
-    const [currentWord, setCurrentWord] = useState(words[0]);
-    const [isAnimating, setIsAnimating] = useState<boolean>(false);
+    const [index, setIndex] = useState(0);
 
     useEffect(() => {
-        startAnimation();
-    }, [words]);
+        const interval = setInterval(() => {
+            setIndex((prev) => (prev + 1) % words.length);
+        }, duration);
 
-    const startAnimation = () => {
-        const word = words[words.indexOf(currentWord) + 1] || words[0];
-        setCurrentWord(word);
-        setIsAnimating(true);
-    };
+        return () => clearInterval(interval);
+    }, [words, duration]);
 
-    useEffect(() => {
-        if (!isAnimating) {
-            setTimeout(() => {
-                startAnimation();
-            }, duration);
-        }
-    }, [isAnimating]);
+    const currentWord = words[index];
 
     return (
         <div className={cn("flex flex-row items-center leading-none", className)}>
             {text && <span className="text-white font-black">{text}</span>}
-            <div className="relative flex items-center overflow-hidden h-[1em]">
-                <AnimatePresence
-                    mode="popLayout"
-                    onExitComplete={() => {
-                        setIsAnimating(false);
-                    }}
-                >
+            <div className="relative flex items-center overflow-hidden h-[1em] perspective-[1000px]">
+                <AnimatePresence mode="popLayout">
                     <motion.div
                         key={currentWord}
-                        initial={{
-                            opacity: 0,
-                            y: 20,
-                        }}
-                        animate={{
-                            opacity: 1,
-                            y: 0,
-                        }}
-                        exit={{
-                            opacity: 0,
-                            y: -20,
-                            position: "absolute",
-                            filter: "blur(8px)",
-                            scale: 1.5,
-                        }}
-                        transition={{
-                            type: "spring",
-                            stiffness: 100,
-                            damping: 10,
-                        }}
-                        className="inline-block relative text-left text-[#40bbff] font-black"
+                        className="inline-block relative text-left text-[#40bbff] font-black whitespace-nowrap"
+                        initial="initial"
+                        animate="animate"
+                        exit="exit"
                     >
-                        {currentWord.split("").map((letter, index) => (
+                        {currentWord.split("").map((letter, i) => (
                             <motion.span
-                                key={currentWord + index}
-                                initial={{ opacity: 0, y: 10, filter: "blur(8px)" }}
-                                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                                transition={{
-                                    delay: index * 0.08,
-                                    duration: 0.4,
+                                key={`${currentWord}-${i}`}
+                                variants={{
+                                    initial: { y: 20, opacity: 0, rotateX: 90 },
+                                    animate: { y: 0, opacity: 1, rotateX: 0 },
+                                    exit: { y: -20, opacity: 0, rotateX: -90 },
                                 }}
-                                className="inline-block"
+                                transition={{
+                                    duration: 0.5,
+                                    ease: [0.16, 1, 0.3, 1],
+                                    delay: i * 0.05,
+                                }}
+                                className="inline-block origin-center preserve-3d"
                             >
-                                {letter}
+                                {letter === " " ? "\u00A0" : letter}
                             </motion.span>
                         ))}
                     </motion.div>

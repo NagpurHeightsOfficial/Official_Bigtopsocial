@@ -65,8 +65,8 @@ export default function Navbar() {
                         />
                         <LayoutTextFlip
                             text="BIGTOP"
-                            words={["SOCIAL", "TECH", "CREATIVE", "STUDIO"]}
-                            className="text-[25px] md:text-4xl font-black tracking-tighter text-white"
+                            words={["SOCIAL", "TECH", "CREATIVE", "BRANDING"]}
+                            className="text-[25px] md:text-4xl font-black tracking-tighter text-white tracking-[0.04em]"
                         />
                     </Link>
 
