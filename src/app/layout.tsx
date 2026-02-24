@@ -125,6 +125,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={ronzino.variable}>
+      <head>
+        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      </head>
       <body
         className={`antialiased bg-[#1D1D1F] text-white font-sans`}
       >

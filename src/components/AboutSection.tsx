@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform, useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
 const manifestos = [
@@ -61,12 +61,6 @@ const GridItem = ({ item, index }: { item: typeof manifestos[0]; index: number }
 
 export default function AboutSection() {
     const containerRef = useRef(null);
-    const { scrollYProgress } = useScroll({
-        target: containerRef,
-        offset: ["start end", "end start"],
-    });
-
-    const y = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
 
     return (
         <section ref={containerRef} className="relative bg-neutral-950 py-32 overflow-hidden">

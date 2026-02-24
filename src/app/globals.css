@@ -12,6 +12,7 @@
   src: url('/mattone-main/fonts/Mattone-Black.woff2') format('woff2');
   font-weight: 900;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -19,6 +20,7 @@
   src: url('/mattone-main/fonts/Mattone-Bold.woff2') format('woff2');
   font-weight: 700;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -26,6 +28,7 @@
   src: url('/mattone-main/fonts/Mattone-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
+  font-display: swap;
 }
 
 .font-mattone {

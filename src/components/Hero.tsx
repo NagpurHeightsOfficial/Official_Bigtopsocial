@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import { BackgroundRippleEffect } from "@/components/ui/background-ripple-effect";
 
@@ -8,12 +8,23 @@ import { BackgroundRippleEffect } from "@/components/ui/background-ripple-effect
 export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [gridDims, setGridDims] = useState({ rows: 16, cols: 35 });
 
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
+    const CELL_SIZE = 60;
+    const update = () => {
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      setIsMobile(w < 768);
+      // Add +2 to ensure edges are always fully covered
+      setGridDims({
+        cols: Math.ceil(w / CELL_SIZE) + 2,
+        rows: Math.ceil(h / CELL_SIZE) + 2,
+      });
+    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
   }, []);
 
   // Track scroll progress
@@ -46,12 +57,11 @@ export default function Hero() {
         }`}>
 
         {/* Add background ripple, pushed behind everything */}
-        <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 z-0 overflow-hidden">
           <BackgroundRippleEffect
-            // Increase grid density for larger desktop screens
-            rows={isMobile ? 20 : 12}
-            cols={isMobile ? 12 : 35}
-            cellSize={isMobile ? 40 : 60}
+            rows={gridDims.rows}
+            cols={gridDims.cols}
+            cellSize={60}
           />
         </div>
 
@@ -101,8 +111,7 @@ export default function Hero() {
               loop
               muted
               playsInline
-              preload="auto"
-              onEnded={(e) => e.currentTarget.play()}
+              preload="metadata"
             />
             {/* Overlay Gradient to blend video edges if needed, or keeping it raw for "pop" */}
             <div className="absolute inset-0 bg-black/10 pointer-events-none" />

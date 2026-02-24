@@ -21,12 +21,9 @@ export default function Navbar() {
             setIsScrolled(false);
         }
 
-        // Determine direction for Smart Reveal
         if (latest > previous && latest > 150) {
-            // Scrolling Down -> Hide
             setIsVisible(false);
         } else {
-            // Scrolling Up or at top -> Show
             setIsVisible(true);
         }
     });
@@ -66,7 +63,7 @@ export default function Navbar() {
                         <LayoutTextFlip
                             text="BIGTOP"
                             words={["SOCIAL", "TECH", "CREATIVE", "BRANDING"]}
-                            className="text-[25px] md:text-4xl font-black tracking-tighter text-white tracking-[0.04em]"
+                            className="text-[25px] md:text-4xl font-black tracking-tighter text-white tracking-[0.03em]"
                         />
                     </Link>
 

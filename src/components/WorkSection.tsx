@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useTransform, useScroll, useSpring, MotionValue, AnimatePresence } from "framer-motion";
+import { motion, useTransform, useScroll, MotionValue, AnimatePresence } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -134,7 +134,9 @@ const ProjectCard = ({ project, index, progress, total }: { project: Project, in
                   alt={project.title}
                   fill
                   className="object-cover opacity-100 transition-opacity duration-500"
-                  priority={index < 2}
+                  priority={index < 1}
+                  loading={index < 1 ? undefined : "lazy"}
+                  sizes="(max-width: 768px) 100vw, 60vw"
                 />
               </motion.div>
             </AnimatePresence>
@@ -227,7 +229,7 @@ const TitleCard = () => {
 
           <div className="flex flex-col gap-6 max-w-sm">
             <p className="text-lg text-neutral-400 font-light leading-relaxed">
-              We don't just design. We engineer emotions, curate chaos, and build digital cathedrals for the bold.
+              We don&apos;t just design. We engineer emotions, curate chaos, and build digital cathedrals for the bold.
             </p>
 
             <div className="flex items-center gap-3">
@@ -260,7 +262,7 @@ const TitleCard = () => {
             >
               {broadcastProjects.map((p, i) => (
                 <div key={`${p.id}-col1-${i}`} className="relative w-full aspect-[3/4] rounded-2xl overflow-hidden filter grayscale hover:grayscale-0 transition-all duration-500 opacity-60 hover:opacity-100 scale-95 hover:scale-100">
-                  <Image src={p.images[0]} alt={p.title} fill className="object-cover" />
+                  <Image src={p.images[0]} alt={p.title} fill className="object-cover" loading="lazy" sizes="25vw" />
                 </div>
               ))}
             </motion.div>
@@ -275,7 +277,7 @@ const TitleCard = () => {
             >
               {[...broadcastProjects].reverse().map((p, i) => (
                 <div key={`${p.id}-col2-${i}`} className="relative w-full aspect-[3/4] rounded-2xl overflow-hidden filter grayscale hover:grayscale-0 transition-all duration-500 opacity-60 hover:opacity-100 scale-95 hover:scale-100">
-                  <Image src={p.images[1] || p.images[0]} alt={p.title} fill className="object-cover" />
+                  <Image src={p.images[1] || p.images[0]} alt={p.title} fill className="object-cover" loading="lazy" sizes="25vw" />
                 </div>
               ))}
             </motion.div>
@@ -293,15 +295,9 @@ export default function WorkSection() {
     target: targetRef,
   });
 
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 30,
-    damping: 20,
-    mass: 1.2,
-    restDelta: 0.001
-  });
-
-  const totalItems = projects.length + 1;
-  const x = useTransform(smoothProgress, [0, 1], ["0%", "-83.33%"]);
+  // Direct transform — no spring physics. Springs on scroll cause
+  // continuous re-renders and input lag. useTransform is GPU-only.
+  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-83.33%"]);
 
   return (
     <section ref={targetRef} className="relative h-[600vh] bg-neutral-950">
@@ -313,8 +309,8 @@ export default function WorkSection() {
               key={project.id}
               project={project}
               index={index}
-              progress={smoothProgress}
-              total={totalItems - 1} // max index
+              progress={scrollYProgress}
+              total={projects.length}
             />
           ))}
         </motion.div>

@@ -1,18 +1,17 @@
 "use client";
 
-import { motion, useScroll, useTransform, useInView } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useMemo, memo } from "react";
 
 // Memoized Thickness Layers to avoid re-computation on every render
 const ThicknessLayers = memo(() => (
     <>
-        {[...Array(15)].map((_, i) => (
+        {[...Array(8)].map((_, i) => (
             <div
                 key={i}
                 className="absolute inset-0 w-full h-full bg-[#FD7A30] rounded-[50px] backface-visible border border-[#FD7A30]/30"
                 style={{
-                    // Spread layers from -14px to +14px to fill the 30px gap
-                    transform: `translateZ(${-14 + i * 2}px)`,
+                    transform: `translateZ(${-14 + i * 3.5}px)`,
                 }}
             />
         ))}
@@ -85,7 +84,7 @@ const PhoneMockup = memo(({ src, videoSrc, backImage, delay }: { src?: string; v
                                 loop
                                 muted
                                 playsInline
-                                preload="metadata"
+                                preload="none"
                             />
                         ) : (
                             <img src={src} alt="Portfolio Work" className="w-full h-full object-cover" loading="lazy" />
@@ -145,10 +144,10 @@ export default function ProductionSection() {
                     <span className="text-gray-500 uppercase tracking-widest text-sm mb-16 md:mb-2 block font-medium">(Portfolio)</span>
 
                     {/* Parallax Giant Text */}
-                    <div className="relative">
+                    <div className="relative w-full">
                         <motion.h2
-                            style={{ y: textY }}
-                            className="text-[12vw] md:text-[15vw] leading-none font-display font-bold text-gray-200 select-none whitespace-nowrap will-change-transform"
+                            className="leading-none font-display font-bold text-gray-400/50 select-none will-change-transform text-center w-full"
+                            style={{ y: textY, fontSize: "clamp(3rem, 12vw, 12rem)" }}
                         >
                             Production
                         </motion.h2>

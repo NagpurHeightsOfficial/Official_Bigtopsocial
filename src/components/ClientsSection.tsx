@@ -27,12 +27,14 @@ const MarqueeRow = ({ items, direction = "left", speed = 10 }: { items: typeof l
                 transition={{ duration: speed, repeat: Infinity, ease: "linear" }}
                 className="flex items-center flex-shrink-0"
             >
-                {[...items, ...items, ...items].map((logo, index) => (
+                {[...items, ...items].map((logo, index) => (
                     <div key={index} className="mx-6 md:mx-12 group relative w-40 md:w-80 aspect-[3/2] flex items-center justify-center">
                         <img
                             src={logo.src}
                             alt={logo.name}
                             className="w-full h-full object-contain grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 transform group-hover:scale-110"
+                            loading="lazy"
+                            decoding="async"
                             onError={(e) => { e.currentTarget.style.display = 'none'; }}
                         />
                     </div>
@@ -44,12 +46,14 @@ const MarqueeRow = ({ items, direction = "left", speed = 10 }: { items: typeof l
                 transition={{ duration: speed, repeat: Infinity, ease: "linear" }}
                 className="flex items-center flex-shrink-0"
             >
-                {[...items, ...items, ...items].map((logo, index) => (
+                {[...items, ...items].map((logo, index) => (
                     <div key={index} className="mx-6 md:mx-12 group relative w-40 md:w-80 aspect-[3/2] flex items-center justify-center">
                         <img
                             src={logo.src}
                             alt={logo.name}
                             className="w-full h-full object-contain grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 transform group-hover:scale-110"
+                            loading="lazy"
+                            decoding="async"
                             onError={(e) => { e.currentTarget.style.display = 'none'; }}
                         />
                     </div>

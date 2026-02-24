@@ -171,20 +171,24 @@ export default function ThreePreloader() {
 
     useEffect(() => {
         const duration = 3000;
-        const interval = 50;
-        const steps = duration / interval;
-        let currentStep = 0;
+        let startTime: number | null = null;
+        let rafId: number;
 
-        const timer = setInterval(() => {
-            currentStep++;
-            if (currentStep >= steps) {
-                clearInterval(timer);
+        const animate = (timestamp: number) => {
+            if (!startTime) startTime = timestamp;
+            const elapsed = timestamp - startTime;
+            const progress = Math.min((elapsed / duration) * 100, 100);
+            setProgress(progress);
+
+            if (elapsed < duration) {
+                rafId = requestAnimationFrame(animate);
+            } else {
                 setTimeout(() => setComplete(true), 500);
             }
-            setProgress((currentStep / steps) * 100);
-        }, interval);
+        };
 
-        return () => clearInterval(timer);
+        rafId = requestAnimationFrame(animate);
+        return () => cancelAnimationFrame(rafId);
     }, []);
 
     return (

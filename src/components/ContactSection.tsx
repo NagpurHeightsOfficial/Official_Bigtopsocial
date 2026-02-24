@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { BackgroundRippleEffect } from "@/components/ui/background-ripple-effect";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function ContactSection() {
     const [formData, setFormData] = useState({
@@ -16,6 +16,20 @@ export default function ContactSection() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
     const [errorMessage, setErrorMessage] = useState("");
+    const [gridDims, setGridDims] = useState({ rows: 16, cols: 35 });
+
+    useEffect(() => {
+        const CELL_SIZE = 60;
+        const update = () => {
+            setGridDims({
+                cols: Math.ceil(window.innerWidth / CELL_SIZE) + 2,
+                rows: Math.ceil(window.innerHeight / CELL_SIZE) + 2,
+            });
+        };
+        update();
+        window.addEventListener("resize", update);
+        return () => window.removeEventListener("resize", update);
+    }, []);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -66,10 +80,10 @@ export default function ContactSection() {
     return (
         <section className="relative min-h-screen bg-neutral-950 text-white overflow-hidden flex flex-col justify-center py-20 w-full dark">
 
-            <div className="absolute inset-0 z-0">
+            <div className="absolute inset-0 z-0 overflow-hidden">
                 <BackgroundRippleEffect
-                    rows={30}
-                    cols={35}
+                    rows={gridDims.rows}
+                    cols={gridDims.cols}
                     cellSize={60}
                 />
             </div>
