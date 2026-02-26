@@ -260,9 +260,9 @@ export default function WorkPage() {
                 <section className="min-h-[50vh] md:min-h-[70vh] flex flex-col justify-end pt-32 pb-12 md:pb-24 px-6 relative">
                     <div className="container mx-auto">
                         <Reveal delay={0.1}>
-                            <h1 className="text-[12vw] md:text-[10vw] leading-[0.85] font-display font-medium uppercase tracking-tight">
-                                Selected <br />
-                                <span className="stroke-text text-transparent ml-[5vw] md:ml-[10vw]">Works</span>
+                            <h1 className="text-[12vw] md:text-[8vw] font-display font-medium leading-[0.8] tracking-tight text-white uppercase">
+                                <span className="text-transparent stroke-text">Selected</span> <br />
+                                <span className="ml-[5vw] md:ml-[10vw] font-bold italic">Works</span>
                             </h1>
                         </Reveal>
 

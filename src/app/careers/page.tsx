@@ -11,8 +11,8 @@ export default function CareersPage() {
                 {/* Hero Section */}
                 <section className="pt-32 pb-20 px-6">
                     <div className="container mx-auto max-w-6xl">
-                        <h1 className="text-6xl md:text-8xl font-display font-bold tracking-tight mb-6">
-                            Careers
+                        <h1 className="text-6xl md:text-8xl font-display font-medium tracking-tight mb-6 uppercase">
+                            <span className="text-transparent stroke-text-dark">Our</span> <span className="text-black font-bold italic">Careers</span>
                         </h1>
                         <p className="text-xl md:text-2xl text-neutral-600 max-w-3xl">
                             Join our team of creative innovators and help shape the future of social media.

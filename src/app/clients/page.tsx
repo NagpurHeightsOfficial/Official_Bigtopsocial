@@ -130,9 +130,9 @@ export default function ClientsPage() {
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, ease: "easeOut" }}
-                        className="text-6xl md:text-9xl font-display font-bold tracking-tighter"
+                        className="text-[12vw] md:text-[8vw] font-display font-medium leading-[0.8] tracking-tight text-white uppercase"
                     >
-                        Our <span className="text-transparent stroke-text hover:text-white transition-colors duration-700 cursor-none">Clients</span>
+                        <span className="text-transparent stroke-text">OUR</span> <span className="font-bold italic">CLIENTS</span>
                     </motion.h1>
                 </div>
             </section>

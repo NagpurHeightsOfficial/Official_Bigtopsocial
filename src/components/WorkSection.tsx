@@ -222,7 +222,7 @@ const TitleCard = () => {
 
           <div className="mb-8">
             <h2 className="text-7xl md:text-9xl font-display font-medium text-white tracking-tighter leading-[0.9]">
-              Visuals<span className="text-neutral-500 font-light">That</span> <br />
+              <span className="stroke-text text-transparent">Visuals</span> <span className="text-neutral-500 font-light">That</span> <br />
               <span className="text-[22vw] md:text-[140px] leading-none italic ">Speak.</span>
             </h2>
           </div>

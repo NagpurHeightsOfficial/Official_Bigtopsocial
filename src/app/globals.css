@@ -118,3 +118,8 @@ h6 {
   -webkit-text-stroke: 1px rgba(255, 255, 255, 0.5);
   color: transparent;
 }
+
+.stroke-text-dark {
+  -webkit-text-stroke: 1px rgba(0, 0, 0, 0.5);
+  color: transparent;
+}

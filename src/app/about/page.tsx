@@ -112,8 +112,8 @@ export default function AboutSection() {
                     <div className="mb-32 md:mb-48 pl-4 md:pl-12 border-l border-white/10">
                         <Reveal>
                             <h2 className="text-[12vw] md:text-[8vw] font-display font-medium leading-[0.8] tracking-tight text-white uppercase">
-                                We Are <br />
-                                <span className="text-transparent stroke-text">The Vibe</span>
+                                <span className="text-transparent stroke-text">We Are</span> <br />
+                                <span className="font-bold italic">The Vibe</span>
                             </h2>
                         </Reveal>
                         <Reveal delay={0.2}>

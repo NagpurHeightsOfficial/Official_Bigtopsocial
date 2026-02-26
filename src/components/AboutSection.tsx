@@ -91,8 +91,8 @@ export default function AboutSection() {
                         viewport={{ once: true }}
                         className="text-[12vw] md:text-[8vw] font-display font-medium leading-[0.8] tracking-tight text-white uppercase"
                     >
-                        We Are <br />
-                        <span className="text-transparent stroke-text">The Vibe</span>
+                        <span className="text-transparent stroke-text">We Are</span> <br />
+                        <span className="font-bold italic">The Vibe</span>
                     </motion.h2>
                     <motion.p
                         initial={{ opacity: 0 }}

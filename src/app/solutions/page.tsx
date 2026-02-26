@@ -205,9 +205,9 @@ export default function SolutionsPage() {
                 <section className="h-[80vh] flex flex-col justify-center relative px-6 border-b border-white/10">
                     <div className="container mx-auto">
                         <Reveal>
-                            <h1 className="text-[14vw] leading-[0.8] font-display font-medium tracking-tighter uppercase">
-                                Total <br />
-                                <span className="stroke-text pl-[10vw]">Solutions</span>
+                            <h1 className="text-[12vw] md:text-[8vw] font-display font-medium leading-[0.8] tracking-tight text-white uppercase">
+                                <span className="text-transparent stroke-text">Total</span> <br />
+                                <span className="pl-[10vw] font-bold italic">Solutions</span>
                             </h1>
                         </Reveal>
 
