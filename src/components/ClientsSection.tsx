@@ -75,9 +75,8 @@ export default function ClientsSection() {
             <div className="absolute top-0 right-0 w-16 md:w-64 h-full bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
 
             <div className="container mx-auto px-6 mb-4 md:mb-12 text-center">
-                <span className="text-gray-400 font-medium tracking-widest text-xs md:text-sm uppercase block mb-4">Partners</span>
                 <h2 className="text-[10vw] md:text-[6vw] font-display font-medium leading-[0.8] tracking-tight text-black uppercase">
-                    <span className="stroke-text-dark">FEATURED</span> IN
+                    <span className="stroke-text-dark">OUR</span> CLIENTS 
                 </h2>
             </div>
 

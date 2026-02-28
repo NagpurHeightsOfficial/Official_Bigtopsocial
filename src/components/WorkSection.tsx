@@ -241,8 +241,8 @@ const TitleCard = () => {
           {/* Bottom Scroll Indicator */}
           <div className="absolute bottom-12 left-8 md:left-16 lg:left-24 flex items-center gap-4 animate-pulse">
             <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center">
-              <span className="text-white text-xl md:hidden">↑</span>
-              <span className="text-white text-xl hidden md:block">↓</span>
+              <span className="text-white text-xl md:hidden">→</span>
+              <span className="text-white text-xl hidden md:block">→</span>
             </div>
             <span className="text-xs font-bold uppercase tracking-widest text-white/30">Scroll to Explore</span>
           </div>
